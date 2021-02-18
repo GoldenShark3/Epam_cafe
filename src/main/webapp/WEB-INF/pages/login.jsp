@@ -26,11 +26,11 @@
         <form>
             <div class="input-container">
                 <i class="fa fa-envelope icon"></i>
-                <input class="input-field" type="text" placeholder="example@mail.ru" name="email">
+                <input class="input-field" type="text" placeholder="example@mail.ru" name="email" required>
             </div>
             <div class="input-container">
                 <i class="fa fa-key icon"></i>
-                <input class="input-field" type="password" placeholder="Password" name="password">
+                <input class="input-field" type="password" placeholder="Password" name="password" required>
             </div>
             <button type="submit" class="fadeIn fourth"><fmt:message key="button.login"/></button>
         </form>

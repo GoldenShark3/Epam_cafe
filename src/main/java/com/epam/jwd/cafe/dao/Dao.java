@@ -1,8 +1,9 @@
 package com.epam.jwd.cafe.dao;
 
+import com.epam.jwd.cafe.model.BaseEntity;
 import java.util.List;
 
-public interface Dao<T> {
+public interface Dao<T extends BaseEntity> {
 
     void create(T entity);
 
@@ -10,6 +11,6 @@ public interface Dao<T> {
 
     void deleteById(int id);
 
-    List<T> findById(int id);
+    List<T> findAll();
 
 }

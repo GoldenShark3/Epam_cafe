@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
 
-public class Order {
+public class Order implements BaseEntity{
     private final int id;
     private final User user;
     private final PaymentMethod paymentMethod;

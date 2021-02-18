@@ -3,7 +3,7 @@ package com.epam.jwd.cafe.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Product {
+public class Product implements BaseEntity{
     private final Integer id;
     private final String name;
     private final BigDecimal price;
