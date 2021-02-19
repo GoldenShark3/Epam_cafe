@@ -34,9 +34,10 @@ public class ConnectionPool {
         return instance;
     }
 
-    public void initConnectionPool() {
+    public void initConnectionPool() throws ClassNotFoundException {
         int initSize = DATABASE_CONFIG.getInitPoolSize();
         connections = ConnectionQueue.getInstance(initSize);
+        Class.forName("com.mysql.cj.jdbc.Driver");
         try {
             for (int i = 0; i < initSize; i++) {
                 connections.put(new ProxyConnection(DriverManager.getConnection(

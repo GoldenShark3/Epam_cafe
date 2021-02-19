@@ -21,7 +21,7 @@
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <div class="fadeIn first">
-            <img src="img/LOGO (2).png" id="icon" alt="User Icon"/>
+            <img src="../../img/LOGO (2).png" id="icon" alt="User Icon"/>
         </div>
         <form>
             <div class="input-container">

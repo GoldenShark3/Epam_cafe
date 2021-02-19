@@ -1,6 +1,8 @@
 package com.epam.jwd.cafe.listener;
 
 import com.epam.jwd.cafe.pool.ConnectionPool;
+import com.epam.jwd.cafe.service.UserService;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -13,7 +15,12 @@ public class ApplicationListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         connectionPool = ConnectionPool.getInstance();
-        connectionPool.initConnectionPool();
+        try {
+            connectionPool.initConnectionPool();
+        } catch (ClassNotFoundException e) {
+            //todo: log.error("failed to init connection pool", e);
+        }
+
     }
 
     @Override
