@@ -1,6 +1,9 @@
-package com.epam.jwd.cafe.dao.user;
+package com.epam.jwd.cafe.dao.impl;
 
 import com.epam.jwd.cafe.dao.AbstractDao;
+import com.epam.jwd.cafe.dao.field.EntityField;
+import com.epam.jwd.cafe.dao.field.UserField;
+import com.epam.jwd.cafe.exception.DaoException;
 import com.epam.jwd.cafe.model.Role;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.pool.ConnectionPool;
@@ -96,44 +99,43 @@ public class UserDao extends AbstractDao<User> {
     }
 
     @Override
-    public List<User> findByField(String searchableField, UserField nameOfField) {
+    public List<User> findByField(String searchableField, EntityField<User> nameOfField) throws DaoException {
         List<User> usersList = new ArrayList<>();
         try (Connection connection = connectionPool.retrieveConnection()) {
             try (Statement statement = connection.createStatement()) {
-                ResultSet resultSet = statement.executeQuery(retrieveSqlByUserField(nameOfField, searchableField));
+                ResultSet resultSet = statement.executeQuery(retrieveSqlByUserField((UserField) nameOfField, searchableField));
                 while (resultSet.next()) {
                     Optional<User> userOptional = parseResultSet(resultSet);
                     userOptional.ifPresent(usersList::add);
                 }
             }
         } catch (SQLException e) {
-            //todo: throw new DaoException();
+            throw new DaoException("Failed to find user by " + nameOfField.toString().toLowerCase());
         }
         return usersList;
     }
 
     private String retrieveSqlByUserField(UserField field, String searchableField) {
-        String sql = SQL_FIND_ALL;
+        StringBuilder sql = new StringBuilder(SQL_FIND_ALL);
         switch (field) {
             case USERNAME:
-                sql += " WHERE username = " + searchableField;
+                sql.append(" WHERE username = ").append(searchableField);
                 break;
             case FIRSTNAME:
-                sql += " WHERE first_name = " + searchableField;
+                sql.append(" WHERE first_name = ").append(searchableField);
                 break;
             case LASTNAME:
-                sql += " WHERE last_name = " + searchableField;
+                sql.append(" WHERE last_name = ").append(searchableField);
                 break;
             case PHONE_NUMBER:
-                sql += " WHERE phone_number = " + searchableField;
+                sql.append(" WHERE phone_number = ").append(searchableField);
                 break;
             case EMAIL:
-                sql += " WHERE email = " + searchableField;
+                sql.append(" WHERE email = ").append(searchableField);
                 break;
-            case ALL_FIELD:
             default:
-                return sql;
+                return sql.toString();
         }
-        return sql;
+        return sql.toString();
     }
 }

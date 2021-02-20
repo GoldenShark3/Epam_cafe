@@ -2,7 +2,7 @@ package com.epam.jwd.cafe.model;
 
 import java.util.Objects;
 
-public class Review implements BaseEntity {
+public class Review extends BaseEntity {
     private final Integer id;
     private final String feedback;
     private final Integer rate;

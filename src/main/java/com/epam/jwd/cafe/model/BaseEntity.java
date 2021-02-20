@@ -1,4 +1,4 @@
 package com.epam.jwd.cafe.model;
 
-public interface BaseEntity {
+public abstract class BaseEntity {
 }

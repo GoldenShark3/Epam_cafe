@@ -3,19 +3,21 @@ package com.epam.jwd.cafe.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Product implements BaseEntity{
+public class Product extends BaseEntity{
     private final Integer id;
     private final String name;
     private final BigDecimal price;
     private final String description;
     private final String imgFileName;
+    private final ProductType productType;
 
-    private Product(int id, String name, BigDecimal price, String description, String imgFileName) {
+    private Product(int id, String name, BigDecimal price, String description, String imgFileName, ProductType productType) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.imgFileName = imgFileName;
+        this.productType = productType;
     }
 
     @Override
@@ -26,6 +28,7 @@ public class Product implements BaseEntity{
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", imgFileName='" + imgFileName + '\'' +
+                ", productType=" + productType +
                 '}';
     }
 
@@ -34,12 +37,12 @@ public class Product implements BaseEntity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(description, product.description) && Objects.equals(imgFileName, product.imgFileName);
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(description, product.description) && Objects.equals(imgFileName, product.imgFileName) && Objects.equals(productType, product.productType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, description, imgFileName);
+        return Objects.hash(id, name, price, description, imgFileName, productType);
     }
 
     public int getId() {
@@ -62,6 +65,10 @@ public class Product implements BaseEntity{
         return imgFileName;
     }
 
+    public ProductType getProductType() {
+        return productType;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -72,6 +79,7 @@ public class Product implements BaseEntity{
         private BigDecimal price;
         private String description;
         private String imgFileName;
+        private ProductType productType;
 
         private Builder() {
         }
@@ -101,12 +109,18 @@ public class Product implements BaseEntity{
             return this;
         }
 
+        public Builder withProductType(ProductType productType) {
+            this.productType = productType;
+            return this;
+        }
+
         public Product build() {
             return new Product(this.id,
                     this.name,
                     this.price,
                     this.description,
-                    this.imgFileName);
+                    this.imgFileName,
+                    this.productType);
         }
     }
 }

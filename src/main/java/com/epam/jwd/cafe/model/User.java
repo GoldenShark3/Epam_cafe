@@ -3,7 +3,7 @@ package com.epam.jwd.cafe.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class User implements BaseEntity{
+public class User extends BaseEntity{
     private final int id;
     private final Role role;
     private final String username;

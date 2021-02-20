@@ -1,8 +1,6 @@
 package com.epam.jwd.cafe.listener;
 
 import com.epam.jwd.cafe.pool.ConnectionPool;
-import com.epam.jwd.cafe.service.UserService;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
