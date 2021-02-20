@@ -6,6 +6,7 @@ import com.epam.jwd.cafe.dao.field.ProductTypeField;
 import com.epam.jwd.cafe.exception.DaoException;
 import com.epam.jwd.cafe.model.ProductType;
 import com.epam.jwd.cafe.pool.ConnectionPool;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,10 +66,10 @@ public class ProductTypeDao extends AbstractDao<ProductType> {
     protected Optional<ProductType> parseResultSet(ResultSet resultSet) throws SQLException {
         return Optional.of(
                 ProductType.builder()
-                .withId(resultSet.getInt("id"))
-                .withName(resultSet.getString("type_name"))
-                .withFileName(resultSet.getString("img_filename"))
-                .build()
+                        .withId(resultSet.getInt("id"))
+                        .withName(resultSet.getString("type_name"))
+                        .withFileName(resultSet.getString("img_filename"))
+                        .build()
         );
     }
 
@@ -76,10 +77,9 @@ public class ProductTypeDao extends AbstractDao<ProductType> {
     public List<ProductType> findByField(String searchableField, EntityField<ProductType> nameOfField) throws DaoException {
         List<ProductType> productTypeList = new ArrayList<>();
         try (Connection connection = connectionPool.retrieveConnection()) {
-            try (Statement statement = connection.createStatement()) {
-                ResultSet resultSet = statement.executeQuery(
-                        retrieveSqlByProductTypeField((ProductTypeField) nameOfField, searchableField));
-
+            try (PreparedStatement preparedStatement = connection.prepareStatement(retrieveSqlByProductTypeField((ProductTypeField) nameOfField))) {
+                preparedStatement.setString(1, searchableField);
+                ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     Optional<ProductType> productTypeOptional = parseResultSet(resultSet);
                     productTypeOptional.ifPresent(productTypeList::add);
@@ -91,21 +91,20 @@ public class ProductTypeDao extends AbstractDao<ProductType> {
         return productTypeList;
     }
 
-    private String retrieveSqlByProductTypeField(ProductTypeField nameOfField, String searchableField) {
+    private String retrieveSqlByProductTypeField(ProductTypeField nameOfField) throws DaoException {
         StringBuilder sql = new StringBuilder(SQL_FIND_ALL);
-
         switch (nameOfField) {
             case ID:
-                sql.append(" WHERE id = ").append(searchableField);
+                sql.append(" WHERE id = ?");
                 break;
             case NAME:
-                sql.append(" WHERE type_name = ").append(searchableField);
+                sql.append(" WHERE type_name = ?");
                 break;
             case IMG_FILENAME:
-                sql.append(" WHERE img_filename = ").append(searchableField);
+                sql.append(" WHERE img_filename = ?");
                 break;
             default:
-                return sql.toString();
+                throw new DaoException(nameOfField.name().toLowerCase() + " - this field does not exist");
         }
         return sql.toString();
     }

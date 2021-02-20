@@ -101,8 +101,9 @@ public class OrderDao extends AbstractDao<Order> {
     public List<Order> findByField(String searchableField, EntityField<Order> nameOfField) throws DaoException {
         List<Order> orderList = new ArrayList<>();
         try (Connection connection = connectionPool.retrieveConnection()) {
-            try (Statement statement = connection.createStatement()) {
-                ResultSet resultSet = statement.executeQuery(retrieveSqlByOrderField((OrderField) nameOfField, searchableField));
+            try (PreparedStatement preparedStatement = connection.prepareStatement(retrieveSqlByOrderField((OrderField) nameOfField))) {
+                preparedStatement.setString(1, searchableField);
+                ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     Optional<Order> productOptional = parseResultSet(resultSet);
                     productOptional.ifPresent(orderList::add);
@@ -133,17 +134,17 @@ public class OrderDao extends AbstractDao<Order> {
         return users.get(0);
     }
 
-    private String retrieveSqlByOrderField(OrderField nameOfField, String searchableField) {
+    private String retrieveSqlByOrderField(OrderField nameOfField) throws DaoException {
         StringBuilder sql = new StringBuilder(SQL_FIND_ALL);
         switch (nameOfField) {
             case ID:
-                sql.append(" WHERE id = ").append(searchableField);
+                sql.append(" WHERE id = ?");
                 break;
             case USER_ID:
-                sql.append(" WHERE user_id = ").append(searchableField);
+                sql.append(" WHERE user_id = ?");
                 break;
             default:
-                return sql.toString();
+                throw new DaoException(nameOfField.name().toLowerCase() + " - this field does not exist");
         }
         return sql.toString();
     }

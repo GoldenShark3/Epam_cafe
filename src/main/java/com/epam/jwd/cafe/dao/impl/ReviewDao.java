@@ -86,8 +86,9 @@ public class ReviewDao extends AbstractDao<Review> {
     public List<Review> findByField(String searchableField, EntityField<Review> nameOfField) throws DaoException {
         List<Review> reviewList = new ArrayList<>();
         try (Connection connection = connectionPool.retrieveConnection()) {
-            try (Statement statement = connection.createStatement()) {
-                ResultSet resultSet = statement.executeQuery(retrieveSqlByReviewField((ReviewField) nameOfField, searchableField));
+            try (PreparedStatement preparedStatement = connection.prepareStatement(retrieveSqlByReviewField((ReviewField) nameOfField))) {
+                preparedStatement.setString(1, searchableField);
+                ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     Optional<Review> reviewOptional = parseResultSet(resultSet);
                     reviewOptional.ifPresent(reviewList::add);
@@ -99,18 +100,18 @@ public class ReviewDao extends AbstractDao<Review> {
         return reviewList;
     }
 
-    private String retrieveSqlByReviewField(ReviewField nameOfField, String searchableField) {
+    private String retrieveSqlByReviewField(ReviewField nameOfField) throws DaoException {
         StringBuilder sql = new StringBuilder(SQL_FIND_ALL);
         switch (nameOfField) {
             case ID:
-                sql.append(" WHERE id = ").append(searchableField);
+                sql.append(" WHERE id = ?");
                 break;
             case RATE:
-                sql.append(" WHERE rate = ").append(searchableField);
+                sql.append(" WHERE rate = ?");
                 break;
             default:
                 return sql.toString();
         }
-        return sql.toString();
+        throw new DaoException(nameOfField.name().toLowerCase() + " - this field does not exist");
     }
 }
