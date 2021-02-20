@@ -93,8 +93,9 @@ public class ProductDao extends AbstractDao<Product> {
     public List<Product> findByField(String searchableField, EntityField<Product> nameOfField) throws DaoException {
         List<Product> productList = new ArrayList<>();
         try (Connection connection = connectionPool.retrieveConnection()) {
-            try (Statement statement = connection.createStatement()) {
-                ResultSet resultSet = statement.executeQuery(retrieveSqlByProductField((ProductField) nameOfField, searchableField));
+            try (PreparedStatement preparedStatement = connection.prepareStatement(retrieveSqlByProductField((ProductField) nameOfField))) {
+                preparedStatement.setString(1, searchableField);
+                ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     Optional<Product> productOptional = parseResultSet(resultSet);
                     productOptional.ifPresent(productList::add);
@@ -143,26 +144,26 @@ public class ProductDao extends AbstractDao<Product> {
     }
 
 
-    private String retrieveSqlByProductField(ProductField nameOfField, String searchableField) {
+    private String retrieveSqlByProductField(ProductField nameOfField) throws DaoException {
         StringBuilder sql = new StringBuilder(SQL_FIND_ALL);
         switch (nameOfField) {
             case ID:
-                sql.append(" WHERE id = ").append(searchableField);
+                sql.append(" WHERE id = ?");
                 break;
             case NAME:
-                sql.append(" WHERE product_name = ").append(searchableField);
+                sql.append(" WHERE product_name = ?");
                 break;
             case PRICE:
-                sql.append(" WHERE price = ").append(searchableField);
+                sql.append(" WHERE price = ?");
                 break;
             case IMG_NAME:
-                sql.append(" WHERE img_name = ").append(searchableField);
+                sql.append(" WHERE img_name = ?");
                 break;
             case PRODUCT_DESCRIPTION:
-                sql.append(" WHERE product_description = ").append(searchableField);
+                sql.append(" WHERE product_description = ?");
                 break;
             default:
-                return sql.toString();
+                throw new DaoException(nameOfField.name().toLowerCase() + " - this field does not exist");
         }
         return sql.toString();
     }

@@ -102,8 +102,9 @@ public class UserDao extends AbstractDao<User> {
     public List<User> findByField(String searchableField, EntityField<User> nameOfField) throws DaoException {
         List<User> usersList = new ArrayList<>();
         try (Connection connection = connectionPool.retrieveConnection()) {
-            try (Statement statement = connection.createStatement()) {
-                ResultSet resultSet = statement.executeQuery(retrieveSqlByUserField((UserField) nameOfField, searchableField));
+            try (PreparedStatement preparedStatement = connection.prepareStatement(retrieveSqlByUserField((UserField) nameOfField))) {
+                preparedStatement.setString(1, searchableField);
+                ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     Optional<User> userOptional = parseResultSet(resultSet);
                     userOptional.ifPresent(usersList::add);
@@ -115,26 +116,26 @@ public class UserDao extends AbstractDao<User> {
         return usersList;
     }
 
-    private String retrieveSqlByUserField(UserField field, String searchableField) {
+    private String retrieveSqlByUserField(UserField nameOfField) throws DaoException {
         StringBuilder sql = new StringBuilder(SQL_FIND_ALL);
-        switch (field) {
+        switch (nameOfField) {
             case USERNAME:
-                sql.append(" WHERE username = ").append(searchableField);
+                sql.append(" WHERE username = ?");
                 break;
             case FIRSTNAME:
-                sql.append(" WHERE first_name = ").append(searchableField);
+                sql.append(" WHERE first_name = ?");
                 break;
             case LASTNAME:
-                sql.append(" WHERE last_name = ").append(searchableField);
+                sql.append(" WHERE last_name = ?");
                 break;
             case PHONE_NUMBER:
-                sql.append(" WHERE phone_number = ").append(searchableField);
+                sql.append(" WHERE phone_number = ?");
                 break;
             case EMAIL:
-                sql.append(" WHERE email = ").append(searchableField);
+                sql.append(" WHERE email = ?");
                 break;
             default:
-                return sql.toString();
+                throw new DaoException(nameOfField.name().toLowerCase() + " - this field does not exist");
         }
         return sql.toString();
     }
