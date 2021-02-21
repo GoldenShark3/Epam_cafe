@@ -8,7 +8,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="<c:url value="/cafe?command=to-main"/>">
-            <img src="<c:url value='/img/LOGO (2).png'/>" alt="Epam cafe" width="200" height="40"/>
+            <img src="<c:url value='/img/logo.png'/>" alt="Epam cafe" width="200" height="40"/>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
             <div class="navbar-nav col-3 d-flex justify-content-end px-2">
                 <c:if test="${isAuthorized}">
                     <a href="<c:url value="/cafe?command=user-to-cart"/>">
-                        <img id="cart" class="mx-3" src="<c:url value='../../../img/shopping-cart.svg'/>" alt="cart"
+                        <img id="cart" class="mx-3" src="<c:url value='../../img/shopping-cart.svg'/>" alt="cart"
                              width="35" height="35"/>
                     </a>
                 </c:if>
