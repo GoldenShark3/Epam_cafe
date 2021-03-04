@@ -6,14 +6,20 @@ import com.epam.jwd.cafe.command.RedirectResponseType;
 import com.epam.jwd.cafe.command.RequestContext;
 import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.ResponseType;
+import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/cafe")
+@WebServlet(urlPatterns = {"/cafe", "*.do"})
+@MultipartConfig(location = "C:\\Users\\Aleksey\\Desktop\\EpamCafe\\src\\main\\webapp\\data", maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 2)
 public class Controller extends HttpServlet {
 
     @Override
@@ -28,17 +34,24 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         RequestContext requestContext = new RequestContext(req);
-        String commandName = req.getParameter("command");
+        String commandName = req.getParameter(RequestConstant.COMMAND);
         Command command = Command.of(commandName);
         ResponseContext responseContext = command.execute(requestContext);
         responseContext.getRequestAttributes().forEach(req::setAttribute);
         responseContext.getSessionAttributes().forEach(req.getSession()::setAttribute);
 
         ResponseType responseType = responseContext.getResponseType();
-        if (responseType.getType().equals(ResponseType.Type.REDIRECT)) {
-            resp.sendRedirect(req.getContextPath() + ((RedirectResponseType) responseType).getCommand());
-        } else {
-            req.getRequestDispatcher(((ForwardResponseType) responseType).getPage()).forward(req, resp);
+
+        switch (responseType.getType()) {
+            case REDIRECT:
+                resp.sendRedirect(req.getContextPath() + ((RedirectResponseType) responseType).getCommand());
+                break;
+            case FORWARD:
+                req.getRequestDispatcher(((ForwardResponseType) responseType).getPage()).forward(req, resp);
+                break;
+            case REST:
+                resp.getWriter().write(new ObjectMapper().writeValueAsString(responseContext.getRequestAttributes()));
+                break;
         }
     }
 }

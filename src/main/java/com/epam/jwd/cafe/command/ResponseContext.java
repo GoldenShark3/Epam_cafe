@@ -1,5 +1,6 @@
 package com.epam.jwd.cafe.command;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ResponseContext {
@@ -7,15 +8,28 @@ public class ResponseContext {
     private final Map<String, Object> requestAttributes;
     private final Map<String, Object> sessionAttributes;
 
-    public ResponseContext(ResponseType responseType, Map<String, Object> requestAttributes, Map<String, Object> sessionAttributes) {
+    public ResponseContext(Map<String, Object> requestAttributes, Map<String, Object> sessionAttributes) {
+        this.requestAttributes = requestAttributes;
+        this.sessionAttributes = sessionAttributes;
+    }
+
+    public ResponseContext(ResponseType responseType, Map<String, Object> requestAttributes,
+                           Map<String, Object> sessionAttributes) {
         this.responseType = responseType;
         this.requestAttributes = requestAttributes;
         this.sessionAttributes = sessionAttributes;
     }
 
-    public ResponseContext(Map<String, Object> requestAttributes, Map<String, Object> sessionAttributes) {
+    public ResponseContext(ResponseType responseType, Map<String, Object> requestAttributes) {
+        this.responseType = responseType;
         this.requestAttributes = requestAttributes;
-        this.sessionAttributes = sessionAttributes;
+        this.sessionAttributes = new HashMap<>();
+    }
+
+    public ResponseContext(ResponseType responseType) {
+        this.responseType = responseType;
+        this.requestAttributes = new HashMap<>();
+        this.sessionAttributes = new HashMap<>();
     }
 
     public ResponseType getResponseType() {

@@ -5,6 +5,8 @@ import com.epam.jwd.cafe.dao.impl.UserDao;
 import com.epam.jwd.cafe.exception.DaoException;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.User;
+import com.epam.jwd.cafe.model.dto.UserDto;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,11 +38,12 @@ public class UserService {
         Optional<User> userOptional = findByUsername(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if (password.equals(user.getPassword())) { //todo: crypt password
+            if (password.equals(user.getPassword())) {
                 if (user.isBlocked()) {
                     return Optional.of("serverMessage.blockedAccount");
                 }
-                session.put("user", user); //todo: create UserDto (ID, Role)
+                UserDto userDto = new UserDto(user.getId(), user.getRole());
+                session.put("user", userDto);
                 return Optional.empty();
             }
         }

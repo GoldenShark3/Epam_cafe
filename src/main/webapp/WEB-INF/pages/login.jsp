@@ -15,15 +15,21 @@
 <c:import url="../parts/navbar.jsp"/>
 
 <div class="container-fluid d-flex justify-content-center mt-5">
-    <form name="login" action="<c:url value="/cafe"/>" method="post" class="needs-validation w-25 border-dark" novalidate>
+    <form name="login" action="<c:url value="/cafe"/>" method="post" class="needs-validation w-25 border-dark"
+          novalidate>
         <h2 class="d-flex justify-content-center"><fmt:message key="login.caption"/></h2>
+
+        <p id="server_message" class="text-danger">${server_message}</p>
+        <p id="error_message" class="text-danger">${error_message}</p>
         <input type="hidden" name="command" value="login">
+
         <div>
-            <label class="form-label" for="loginLabel"><fmt:message key="email.label"/></label>
-            <input type="email" class="form-control" placeholder="<fmt:message key="placeholder.email"/>" name="email"
-                   id="loginLabel" pattern="([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}" required/>
+            <label class="form-label" for="username"><fmt:message key="username.label"/></label>
+            <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.username"/>" name="username"
+                   id="username" pattern="^[(\w)-]{4,20}"
+                   required/>
             <div class="invalid-feedback">
-                <fmt:message key="invalid.email"/>
+                <fmt:message key="invalid.username"/>
             </div>
         </div>
         <div>
@@ -42,8 +48,35 @@
             </div>
         </div>
     </form>
-</div>
+    <script>
+        function onAjaxSuccess(data) {
+            let pMessages = document.getElementById("server_message");
+            let eMessages = document.getElementById("error_message");
+            pMessages.innerText = "";
+            eMessages.innerText = "";
 
+            let parse = JSON.parse(data);
+
+            let serverMessages = parse.server_message;
+            let errorMessages = parse.error_message;
+
+            if (serverMessages != null) {
+                pMessages.innerText += serverMessages + '\n';
+            }
+
+            if (errorMessages != null) {
+                for (let i = 0; i < errorMessages.length; i++) {
+                    eMessages.innerText += errorMessages[i] + '\n';
+                }
+            }
+
+            let redirectCommand = parse.redirect_command;
+            if (redirectCommand != null) {
+                window.location.href = '<c:url value="/cafe"/>' + "?command=" + redirectCommand
+            }
+        }
+    </script>
+</div>
 <c:import url="../parts/footer.jsp"/>
 </body>
 </html>

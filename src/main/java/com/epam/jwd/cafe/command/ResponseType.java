@@ -3,7 +3,8 @@ package com.epam.jwd.cafe.command;
 public abstract class ResponseType {
     public enum Type{
         FORWARD,
-        REDIRECT
+        REDIRECT,
+        REST
     }
 
     private final Type type;

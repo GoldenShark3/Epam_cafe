@@ -1,0 +1,63 @@
+package com.epam.jwd.cafe.command.impl;
+
+import com.epam.jwd.cafe.command.Command;
+import com.epam.jwd.cafe.command.CommandManager;
+import com.epam.jwd.cafe.command.ForwardResponseType;
+import com.epam.jwd.cafe.command.RedirectResponseType;
+import com.epam.jwd.cafe.command.RequestContext;
+import com.epam.jwd.cafe.command.ResponseContext;
+import com.epam.jwd.cafe.command.RestResponseType;
+import com.epam.jwd.cafe.command.constant.PageConstant;
+import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.exception.ServiceException;
+import com.epam.jwd.cafe.handler.Handler;
+import com.epam.jwd.cafe.handler.impl.PasswordHandler;
+import com.epam.jwd.cafe.handler.impl.UsernameHandler;
+import com.epam.jwd.cafe.service.UserService;
+import com.epam.jwd.cafe.util.LocalizationMessage;
+import com.epam.jwd.cafe.util.PasswordEncoder;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
+public class LoginCommand implements Command {
+    private static final UserService USER_SERVICE = UserService.INSTANCE;
+    private static final Handler LOGIN_HANDLER = new UsernameHandler(new PasswordHandler());
+
+
+    @Override
+    public ResponseContext execute(RequestContext request) {
+        Set<String> errorMessages = LOGIN_HANDLER.handleRequest(request);
+        ResponseContext responseContext;
+
+        if (errorMessages.isEmpty()) {
+            String username = request.getRequestParameters().get(RequestConstant.USERNAME);
+            String password = request.getRequestParameters().get(RequestConstant.PASSWORD);
+            password = PasswordEncoder.encryptPassword(password);
+            try {
+                Map<String, Object> responseSession = new HashMap<>();
+                Optional<String> serverMessage = USER_SERVICE.loginUser(username, password, responseSession);
+                Map<String, Object> map = new HashMap<>();
+
+                if (!serverMessage.isPresent()) {
+                    map.put(RequestConstant.REDIRECT_COMMAND, CommandManager.TO_REGISTRATION.getCommandName());
+                    responseContext = new ResponseContext(new RestResponseType(), map, responseSession);
+                } else {
+                    map.put(RequestConstant.SERVER_MESSAGE, LocalizationMessage.localize(request.getLocale(), serverMessage.get()));
+                    responseContext = new ResponseContext(new ForwardResponseType(PageConstant.LOGIN_PAGE), map);
+                }
+            } catch (ServiceException e) {
+//                e.printStackTrace();
+                responseContext = null;
+                //todo: log
+            }
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            map.put(RequestConstant.ERROR_MESSAGE, errorMessages);
+            responseContext = new ResponseContext(new RestResponseType(), map);
+        }
+        return responseContext;
+    }
+}
