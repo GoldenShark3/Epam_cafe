@@ -38,21 +38,22 @@ public class LoginCommand implements Command {
             password = PasswordEncoder.encryptPassword(password);
             try {
                 Map<String, Object> responseSession = new HashMap<>();
+                Map<String, Object> requestMap = new HashMap<>();
                 Optional<String> serverMessage = USER_SERVICE.loginUser(username, password, responseSession);
-                Map<String, Object> map = new HashMap<>();
 
                 if (!serverMessage.isPresent()) {
-                    map.put(RequestConstant.REDIRECT_COMMAND, CommandManager.TO_REGISTRATION.getCommandName());
-                    responseContext = new ResponseContext(new RestResponseType(), map, responseSession);
+                    requestMap.put(RequestConstant.REDIRECT_COMMAND, CommandManager.TO_MAIN.getCommandName());
+                    responseContext = new ResponseContext(new RestResponseType(), requestMap, responseSession);
                 } else {
-                    map.put(RequestConstant.SERVER_MESSAGE, LocalizationMessage.localize(request.getLocale(), serverMessage.get()));
-                    responseContext = new ResponseContext(new ForwardResponseType(PageConstant.LOGIN_PAGE), map);
+                    requestMap.put(RequestConstant.SERVER_MESSAGE, LocalizationMessage.localize(request.getLocale(), serverMessage.get()));
+                    responseContext = new ResponseContext(new RestResponseType(), requestMap);
                 }
+
             } catch (ServiceException e) {
-//                e.printStackTrace();
-                responseContext = null;
+                responseContext = new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE));
                 //todo: log
             }
+
         } else {
             Map<String, Object> map = new HashMap<>();
             map.put(RequestConstant.ERROR_MESSAGE, errorMessages);

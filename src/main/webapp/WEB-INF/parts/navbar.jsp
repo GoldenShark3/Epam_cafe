@@ -9,6 +9,7 @@
 <c:set var="isAuthorized" value="${not empty sessionScope.user}" scope="session"/>
 <c:if test="${isAuthorized}">
     <c:set var="user" value="${sessionScope.user}" scope="session"/>
+    <c:set var="isAdmin" value="${sessionScope.user.role.name eq 'ADMIN'}" scope="request"/>
 </c:if>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -38,7 +39,7 @@
 
                 <c:if test="${isAuthorized}">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=user_to_profile"/>">
+                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=to_profile"/>">
                             <fmt:message key="link.profile"/></a>
                     </li>
 

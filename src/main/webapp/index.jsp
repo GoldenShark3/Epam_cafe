@@ -6,6 +6,6 @@
     <title></title>
 </head>
 <body>
-<c:redirect url="/cafe?command=to_login"/>
+<c:redirect url="/cafe?command=to_main"/>
 </body>
 </html>

@@ -4,12 +4,16 @@ import com.epam.jwd.cafe.command.impl.ChangeLocaleCommand;
 import com.epam.jwd.cafe.command.impl.LoginCommand;
 import com.epam.jwd.cafe.command.impl.RegistrationCommand;
 import com.epam.jwd.cafe.command.impl.ToLoginCommand;
+import com.epam.jwd.cafe.command.impl.ToMainPageCommand;
+import com.epam.jwd.cafe.command.impl.ToProfileCommand;
 import com.epam.jwd.cafe.command.impl.ToRegistrationCommand;
 
 public enum CommandManager {
     TO_LOGIN(new ToLoginCommand(), "to_login"),
-    LOGIN(new LoginCommand(), "login"),
     TO_REGISTRATION(new ToRegistrationCommand(), "to_registration"),
+    TO_MAIN(new ToMainPageCommand(), "to_main"),
+    TO_USER_PROFILE(new ToProfileCommand(), "to_profile"),
+    LOGIN(new LoginCommand(), "login"),
     REGISTRATION(new RegistrationCommand(), "registration"),
     LOCALE_SWITCH(new ChangeLocaleCommand(), "locale_switch"),
     DEFAULT(request -> null, "commandName");
@@ -31,8 +35,8 @@ public enum CommandManager {
     }
 
     static Command of(String name) {
-        for (CommandManager action : values()) {
-            if (action.name().equalsIgnoreCase(name)) {
+        for (CommandManager action : CommandManager.values()) {
+            if (action.getCommandName().equalsIgnoreCase(name)) {
                 return action.command;
             }
         }

@@ -1,15 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
-<fmt:setLocale value="ru_RU"/>
-<fmt:setBundle basename="content_ru_RU"/>
+<c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
+<fmt:setBundle basename="content"/>
+<fmt:setLocale value="${locale}" scope="session"/>
 
 <html>
 <head>
     <c:import url="../parts/header.jsp"/>
-    <title><fmt:message key="login.title"/></title>
+    <title><fmt:message key="title.auth"/></title>
 </head>
 <body>
 <c:import url="../parts/navbar.jsp"/>
@@ -17,26 +18,26 @@
 <div class="container-fluid d-flex justify-content-center mt-5">
     <form name="login" action="<c:url value="/cafe"/>" method="post" class="needs-validation w-25 border-dark"
           novalidate>
-        <h2 class="d-flex justify-content-center"><fmt:message key="login.caption"/></h2>
+        <h2 class="d-flex justify-content-center"><fmt:message key="title.auth"/></h2>
 
         <p id="server_message" class="text-danger">${server_message}</p>
         <p id="error_message" class="text-danger">${error_message}</p>
         <input type="hidden" name="command" value="login">
 
         <div>
-            <label class="form-label" for="username"><fmt:message key="username.label"/></label>
+            <label class="form-label" for="username"><fmt:message key="label.username"/></label>
             <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.username"/>" name="username"
                    id="username" pattern="^[(\w)-]{4,20}"
                    required/>
             <div class="invalid-feedback">
-                <fmt:message key="invalid.username"/>
+                <fmt:message key="error.username"/>
             </div>
         </div>
         <div>
-            <label class="form-label" for="passwordLabel"><fmt:message key="password.label"/></label>
+            <label class="form-label" for="passwordLabel"><fmt:message key="label.password"/></label>
             <input type="password" name="password" class="form-control" id="passwordLabel" required/>
             <div class="invalid-feedback">
-                <fmt:message key="invalid.password"/>
+                <fmt:message key="error.password"/>
             </div>
         </div>
         <div class="form-group mt-2">

@@ -21,6 +21,7 @@ import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.service.UserService;
 import com.epam.jwd.cafe.util.LocalizationMessage;
 import com.epam.jwd.cafe.util.PasswordEncoder;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,9 +39,9 @@ public class RegistrationCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext request) {
         Set<String> errorMessages = REGISTRATION_HANDLER.handleRequest(request);
+        ResponseContext responseContext;
 
         if (errorMessages.isEmpty()) {
-            ResponseContext responseContext;
             String firstName = request.getRequestParameters().get(RequestConstant.FIRST_NAME);
             String lastName = request.getRequestParameters().get(RequestConstant.LAST_NAME);
             String username = request.getRequestParameters().get(RequestConstant.USERNAME);
@@ -62,26 +63,26 @@ public class RegistrationCommand implements Command {
                     .build();
             try {
                 Optional<String> serverMessage = USER_SERVICE.registerUser(user);
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> requestMap = new HashMap<>();
 
                 if (!serverMessage.isPresent()) {
-                    Map<String, Object> map_session = new HashMap<>();
-                    map_session.put("user", user);
-                    map.put(RequestConstant.REDIRECT_COMMAND, CommandManager.TO_LOGIN.getCommandName());
-                    responseContext = new ResponseContext(new RestResponseType(), map, map_session);
+                    Map<String, Object> sessionMap = new HashMap<>();
+                    sessionMap.put("user", user);
+                    requestMap.put(RequestConstant.REDIRECT_COMMAND, CommandManager.TO_MAIN.getCommandName());
+                    responseContext = new ResponseContext(new RestResponseType(), requestMap, sessionMap);
                 } else {
-                    map.put(RequestConstant.SERVER_MESSAGE, LocalizationMessage.localize(request.getLocale(), serverMessage.get()));
-                    responseContext = new ResponseContext(new ForwardResponseType(PageConstant.REGISTRATION_PAGE), map);
+                    requestMap.put(RequestConstant.SERVER_MESSAGE, LocalizationMessage.localize(request.getLocale(), serverMessage.get()));
+                    responseContext = new ResponseContext(new RestResponseType(), requestMap);
                 }
             } catch (ServiceException e) {
 //                todo: log.error("Registration failed" + e);
-                responseContext = new ResponseContext(new ForwardResponseType("error_page"));
+                responseContext = new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE));
             }
-            return responseContext;
         } else {
             Map<String, Object> map = new HashMap<>();
             map.put(RequestConstant.ERROR_MESSAGE, errorMessages);
-            return new ResponseContext(new RestResponseType(), map);
+            responseContext = new ResponseContext(new RestResponseType(), map);
         }
+        return responseContext;
     }
 }

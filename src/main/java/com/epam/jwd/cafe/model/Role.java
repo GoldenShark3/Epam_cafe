@@ -3,8 +3,18 @@ package com.epam.jwd.cafe.model;
 import com.epam.jwd.cafe.exception.EntityNotFoundException;
 
 public enum Role {
-    ADMIN,
-    USER;
+    ADMIN("ADMIN"),
+    USER("USER");
+
+    private final String name;
+
+    Role(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public static Role resolveRoleById(int id) throws EntityNotFoundException {
         Role role;

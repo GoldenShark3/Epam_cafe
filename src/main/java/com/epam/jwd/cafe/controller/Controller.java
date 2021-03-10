@@ -8,7 +8,6 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.ResponseType;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/cafe", "*.do"})
-@MultipartConfig(location = "C:\\Users\\Aleksey\\Desktop\\EpamCafe\\src\\main\\webapp\\data", maxFileSize = 1024 * 1024 * 5,
+@MultipartConfig(location = "C:\\Users\\Aleksey\\Desktop\\EPAM\\EpamCafe\\src\\main\\webapp\\data", maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 2)
 public class Controller extends HttpServlet {
 
@@ -36,10 +35,15 @@ public class Controller extends HttpServlet {
         RequestContext requestContext = new RequestContext(req);
         String commandName = req.getParameter(RequestConstant.COMMAND);
         Command command = Command.of(commandName);
+
         ResponseContext responseContext = command.execute(requestContext);
         responseContext.getRequestAttributes().forEach(req::setAttribute);
         responseContext.getSessionAttributes().forEach(req.getSession()::setAttribute);
 
+        chooseResponseType(req, resp, responseContext);
+    }
+
+    private void chooseResponseType(HttpServletRequest req, HttpServletResponse resp, ResponseContext responseContext) throws IOException, ServletException {
         ResponseType responseType = responseContext.getResponseType();
 
         switch (responseType.getType()) {
