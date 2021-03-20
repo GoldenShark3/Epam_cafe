@@ -13,7 +13,7 @@
 </c:if>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
+    <div class="container-fluid ">
 
         <a class="navbar-brand" href="<c:url value="/cafe?command=to_main"/>">
             <img src="<c:url value='/img/logo.png'/>" alt="Epam_cafe" width="200" height="40"/>
@@ -44,43 +44,39 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=user_to_my_orders"/>">
+                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=to_my_orders"/>">
                             <fmt:message key="link.myOrders"/></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=user_to_review"/>">
+                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=to_review&page=1"/>">
                             <fmt:message key="link.review"/></a>
                     </li>
 
                     <c:if test="${isAdmin}">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="<c:url
-                            value="/cafe?command=admin_to_users&page=1"/>">
+                            value="/cafe?command=to_users&page=1"/>">
                                 <fmt:message key="link.users"/></a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=admin_to_orders&page=1"/>">
+                            <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=to_orders&page=1"/>">
                                 <fmt:message key="link.orders"/></a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=admin_to_reviews&page=1"/>">
-                                <fmt:message key="link.reviews"/></a>
                         </li>
                     </c:if>
                 </c:if>
             </ul>
 
-            <div class="navbar-nav col-3 d-flex justify-content-end px-2">
+            <div class="navbar-nav col-3 d-flex align-content-center justify-content-end">
+
                 <c:if test="${isAuthorized}">
-                    <a href="<c:url value="/cafe?command=user_to_cart"/>">
-                        <img id="cart" class="mx-3" src="<c:url value='#'/>" alt="cart" width="35" height="35"/>
+                    <a href="<c:url value="/cafe?command=to_cart"/>">
+                        <img id="cart" src="<c:url value='/img/clear_cart.png'/>" alt="cart" width="35" height="35"/>
                     </a>
                 </c:if>
 
-                <form action="<c:url value="/cafe"/>" method="post">
+                <form class="mb-0" style="margin-left: 20px" action="<c:url value="/cafe"/>" method="post">
                     <input type="hidden" name="command" value="locale_switch">
                     <input type="hidden" name="page" value="${ requestScope.page }">
 
@@ -92,19 +88,18 @@
                 </form>
 
                 <c:if test="${not isAuthorized}">
-                    <form class="mx-3" action="<c:url value='/cafe'/>">
+                    <form class="mb-0" style="margin-left: 20px" action="<c:url value='/cafe'/>">
                         <input type="hidden" name="command" value="to_login">
                         <button class="btn btn-outline-light"><fmt:message key="button.login"/></button>
                     </form>
                 </c:if>
 
                 <c:if test="${isAuthorized}">
-                    <form class="mx-3" action="<c:url value='/cafe'/>">
-                        <input type="hidden" name="command" value="user_logout">
+                    <form class="mb-0" style="margin-left: 20px" action="<c:url value='/cafe'/>">
+                        <input type="hidden" name="command" value="logout">
                         <button id="logout" class="btn btn-outline-light"><fmt:message key="button.logout"/></button>
                     </form>
                 </c:if>
-
             </div>
         </div>
     </div>

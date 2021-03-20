@@ -93,7 +93,7 @@ public class User extends BaseEntity{
         return phoneNumber;
     }
 
-    public boolean isBlocked() {
+    public boolean getIsBlocked() {
         return isBlocked;
     }
 

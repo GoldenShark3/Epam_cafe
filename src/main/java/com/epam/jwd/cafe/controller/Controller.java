@@ -17,8 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/cafe", "*.do"})
-@MultipartConfig(location = "C:\\Users\\Aleksey\\Desktop\\EPAM\\EpamCafe\\src\\main\\webapp\\data", maxFileSize = 1024 * 1024 * 5,
-        maxRequestSize = 1024 * 1024 * 5 * 2)
+
+@MultipartConfig(location = "C:\\Users\\Aleksey\\Desktop\\EPAM\\EpamCafe\\out\\artifacts\\epam_cafe_war_exploded\\data",
+        maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 2)
 public class Controller extends HttpServlet {
 
     @Override
@@ -39,6 +40,11 @@ public class Controller extends HttpServlet {
         ResponseContext responseContext = command.execute(requestContext);
         responseContext.getRequestAttributes().forEach(req::setAttribute);
         responseContext.getSessionAttributes().forEach(req.getSession()::setAttribute);
+
+        if (responseContext.getRequestAttributes().containsKey(RequestConstant.LOGOUT)) {
+            req.getSession().invalidate();
+            responseContext.getRequestAttributes().remove(RequestConstant.LOGOUT);
+        }
 
         chooseResponseType(req, resp, responseContext);
     }

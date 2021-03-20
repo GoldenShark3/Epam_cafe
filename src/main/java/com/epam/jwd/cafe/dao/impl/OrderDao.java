@@ -65,6 +65,11 @@ public class OrderDao extends AbstractDao<Order> {
     }
 
     @Override
+    public void create(Order entity) throws DaoException {
+        super.create(entity); //todo: change with ACID
+    }
+
+    @Override
     protected void prepareCreateStatement(PreparedStatement preparedStatement, Order entity) throws SQLException {
         prepareAllOrderStatements(preparedStatement, entity);
     }

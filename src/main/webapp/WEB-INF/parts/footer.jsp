@@ -8,6 +8,17 @@
         crossorigin="anonymous"></script>
 <script>
 
+    <c:if test="${isAuthorized}">
+        <c:if test="${not empty sessionScope.cart}">
+            <c:if test="${sessionScope.cart.size() > 0}">
+                document.getElementById("cart").src = '<c:url value="../../img/full_cart.png"/>';
+            </c:if>
+        </c:if>
+        document.getElementById("logout").addEventListener('click', function () {
+            localStorage.clear();
+        });
+    </c:if>
+
     (function () {
         'use strict'
 
@@ -26,6 +37,7 @@
                 }, false)
             })
     })()
+
     function sendRequest(name) {
         let form = document.forms[name];
         let data = new FormData(form);

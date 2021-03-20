@@ -6,13 +6,13 @@ public class Review extends BaseEntity {
     private final Integer id;
     private final String feedback;
     private final Integer rate;
-    private final Order order;
+    private final User user;
 
-    private Review(Integer id, String feedback, Integer rate, Order order) {
+    private Review(Integer id, String feedback, Integer rate, User user) {
         this.id = id;
         this.feedback = feedback;
         this.rate = rate;
-        this.order = order;
+        this.user = user;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class Review extends BaseEntity {
                 "id=" + id +
                 ", feedback='" + feedback + '\'' +
                 ", rate=" + rate +
-                ", order=" + order +
+                ", user=" + user +
                 '}';
     }
 
@@ -30,12 +30,12 @@ public class Review extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Review review = (Review) o;
-        return Objects.equals(id, review.id) && Objects.equals(feedback, review.feedback) && Objects.equals(rate, review.rate) && Objects.equals(order, review.order);
+        return Objects.equals(id, review.id) && Objects.equals(feedback, review.feedback) && Objects.equals(rate, review.rate) && Objects.equals(user, review.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, feedback, rate, order);
+        return Objects.hash(id, feedback, rate, user);
     }
 
     public Integer getId() {
@@ -50,8 +50,8 @@ public class Review extends BaseEntity {
         return rate;
     }
 
-    public Order getOrder() {
-        return order;
+    public User getUser() {
+        return user;
     }
 
     public static Builder builder() {
@@ -62,7 +62,7 @@ public class Review extends BaseEntity {
         private Integer id;
         private String feedback;
         private Integer rate;
-        private Order order;
+        private User user;
 
         private Builder(){
         }
@@ -82,8 +82,8 @@ public class Review extends BaseEntity {
             return this;
         }
 
-        public Builder withOrder(Order order) {
-            this.order = order;
+        public Builder withUser(User user) {
+            this.user = user;
             return this;
         }
 
@@ -91,7 +91,7 @@ public class Review extends BaseEntity {
             return new Review(this.id,
                     this.feedback,
                     this.rate,
-                    this.order);
+                    this.user);
         }
     }
 }

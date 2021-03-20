@@ -115,7 +115,8 @@ public class Product extends BaseEntity{
         }
 
         public Product build() {
-            return new Product(this.id,
+            return new Product(
+                    this.id,
                     this.name,
                     this.price,
                     this.description,

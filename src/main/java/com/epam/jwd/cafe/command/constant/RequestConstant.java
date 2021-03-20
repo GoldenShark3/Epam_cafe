@@ -14,6 +14,25 @@ public class RequestConstant {
     public final static String LOCALE = "locale";
     public final static String CURRENT_PAGE = "page";
     public final static String ERROR_MESSAGE = "error_message";
+    public final static String USER = "user";
+    public final static String PAGINATION_CONTEXT = "pagination_context";
+    public final static String ID = "id";
+    public final static String LOYALTY_POINTS = "points";
+    public final static String IS_BLOCKED = "check";
+    public final static String CART = "cart";
+    public final static String LOGOUT = "logout";
+    public final static String PRODUCT_NAME = "product_name";
+    public final static String IMG_FILE = "img_file";
+    public final static String SELECT = "select";
+    public final static String PRODUCT_TYPES = "product_types";
+    public final static String TYPE_ID = "type_id";
+    public final static String PRODUCT_TYPE = "product_type";
+    public final static String PRODUCT_PRICE = "product_price";
+    public final static String PRODUCT_DESCRIPTION = "product_description";
+    public final static String TOTAL_COST = "total_cost";
+    public final static String REVIEW = "review";
+    public final static String RATE = "rating";
+    public final static String REVIEWS = "reviews";
 
     private RequestConstant() {
     }

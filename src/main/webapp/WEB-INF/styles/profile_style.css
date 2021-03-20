@@ -1,7 +1,3 @@
-body {
-    background-color: #f9f9fa
-}
-
 .padding {
     padding: 3rem !important
 }
@@ -19,11 +15,15 @@ body {
 }
 
 .m-r-0 {
-    margin-right: 0px
+    margin-right: 0
 }
 
 .m-l-0 {
-    margin-left: 0px
+    margin-left: 0
+}
+
+h6 {
+    font-size: 14px;
 }
 
 .user-card-full .user-profile {
@@ -51,10 +51,6 @@ body {
     border-radius: 5px
 }
 
-h6 {
-    font-size: 14px
-}
-
 .card .card-block p {
     line-height: 25px
 }
@@ -65,24 +61,12 @@ h6 {
     }
 }
 
-.card-block {
-    padding: 1.25rem
-}
-
-.b-b-default {
-    border-bottom: 1px solid #e0e0e0
-}
-
 .m-b-20 {
     margin-bottom: 20px
 }
 
 .p-b-5 {
     padding-bottom: 5px !important
-}
-
-.card .card-block p {
-    line-height: 25px
 }
 
 .m-b-10 {
@@ -101,33 +85,6 @@ h6 {
     font-weight: 600
 }
 
-.m-b-20 {
-    margin-bottom: 20px
-}
-
 .m-t-40 {
     margin-top: 20px
-}
-
-.p-b-5 {
-    padding-bottom: 5px !important
-}
-
-.m-b-10 {
-    margin-bottom: 10px
-}
-
-.m-t-40 {
-    margin-top: 20px
-}
-
-.user-card-full .social-link li {
-    display: inline-block
-}
-
-.user-card-full .social-link li a {
-    font-size: 20px;
-    margin: 0 10px 0 0;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out
 }

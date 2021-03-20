@@ -1,0 +1,46 @@
+package com.epam.jwd.cafe.command.impl;
+
+import com.epam.jwd.cafe.command.Command;
+import com.epam.jwd.cafe.command.ForwardResponseType;
+import com.epam.jwd.cafe.command.RequestContext;
+import com.epam.jwd.cafe.command.ResponseContext;
+import com.epam.jwd.cafe.command.RestResponseType;
+import com.epam.jwd.cafe.command.constant.PageConstant;
+import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.exception.ServiceException;
+import com.epam.jwd.cafe.model.Order;
+import com.epam.jwd.cafe.model.OrderStatus;
+import com.epam.jwd.cafe.service.OrderService;
+import java.util.HashMap;
+import java.util.Optional;
+
+public class UpdateOrderCommand implements Command {
+    private static final OrderService ORDER_SERVICE = OrderService.INSTANCE;
+
+    @Override
+    public ResponseContext execute(RequestContext request) {
+        try {
+            int orderId = Integer.parseInt(request.getRequestParameters().get(RequestConstant.ID));
+            OrderStatus orderStatus = OrderStatus.valueOf(request.getRequestParameters().get(RequestConstant.SELECT));
+            Optional<Order> orderOptional = ORDER_SERVICE.findOrderById(orderId);
+            if (orderOptional.isPresent()) {
+                Order order = Order.builder()
+                        .withId(orderOptional.get().getId())
+                        .withUser(orderOptional.get().getUser())
+                        .withProducts(orderOptional.get().getProducts())
+                        .withDeliveryDate(orderOptional.get().getDeliveryDate())
+                        .withDeliveryAddress(orderOptional.get().getDeliveryAddress())
+                        .withCreateDate(orderOptional.get().getCreateDate())
+                        .withPaymentMethod(orderOptional.get().getPaymentMethod())
+                        .withOrderStatus(orderStatus)
+                        .withCost(orderOptional.get().getCost())
+                        .build();
+                ORDER_SERVICE.updateOrder(order);
+                return new ResponseContext(new RestResponseType(), new HashMap<>(), new HashMap<>());
+            }
+        } catch (ServiceException e) {
+            //todo: log
+        }
+        return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE));
+    }
+}

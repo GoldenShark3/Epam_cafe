@@ -26,7 +26,7 @@ public class PhoneNumberHandler extends AbstractHandler {
         String phoneNumber = requestContext.getRequestParameters().get(RequestConstant.PHONE_NUMBER);
 
         if (StringUtils.isNullOrEmpty(phoneNumber) || !phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
-            error_messages.add(LocalizationMessage.localize(requestContext.getLocale(), "error.phoneNumber"));
+            error_messages.add(LocalizationMessage.localize(requestContext.getLocale(), "serverMessage.phoneNumber"));
         }
 
         if (nextHandler != null) {

@@ -162,6 +162,9 @@ public class ProductDao extends AbstractDao<Product> {
             case PRODUCT_DESCRIPTION:
                 sql.append(" WHERE product_description = ?");
                 break;
+            case PRODUCT_TYPE_ID:
+                sql.append(" WHERE type_id = ?");
+                break;
             default:
                 throw new DaoException(nameOfField.name().toLowerCase() + " - this field does not exist");
         }

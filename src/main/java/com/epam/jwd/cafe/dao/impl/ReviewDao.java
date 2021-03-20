@@ -2,18 +2,17 @@ package com.epam.jwd.cafe.dao.impl;
 
 import com.epam.jwd.cafe.dao.AbstractDao;
 import com.epam.jwd.cafe.dao.field.EntityField;
-import com.epam.jwd.cafe.dao.field.OrderField;
 import com.epam.jwd.cafe.dao.field.ReviewField;
+import com.epam.jwd.cafe.dao.field.UserField;
 import com.epam.jwd.cafe.exception.DaoException;
-import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.Review;
+import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.pool.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +20,9 @@ import java.util.Optional;
 public class ReviewDao extends AbstractDao<Review> {
     public static final ReviewDao INSTANCE = new ReviewDao(ConnectionPool.getInstance());
 
-    private static final String SQL_FIND_ALL = "SELECT id, feedback, rate, order_id FROM review";
-    private static final String SQL_CREATE = "INSERT INTO review(feedback, rate, order_id) VALUES(?, ?, ?)";
-    private static final String SQL_UPDATE = "UPDATE review SET id = ?, feedback = ?, rate = ?, order_id = ? WHERE id = ";
+    private static final String SQL_FIND_ALL = "SELECT id, feedback, rate, user_id FROM review";
+    private static final String SQL_CREATE = "INSERT INTO review(feedback, rate, user_id) VALUES(?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE review SET id = ?, feedback = ?, rate = ?, user_id = ? WHERE id = ";
     private static final String SQL_DELETE = "DELETE review WHERE id = ?";
 
     private ReviewDao(ConnectionPool connectionPool) {
@@ -54,28 +53,28 @@ public class ReviewDao extends AbstractDao<Review> {
     protected void prepareCreateStatement(PreparedStatement preparedStatement, Review entity) throws SQLException {
         preparedStatement.setString(1, entity.getFeedback());
         preparedStatement.setInt(2, entity.getRate());
-        preparedStatement.setInt(3, entity.getOrder().getId());
+        preparedStatement.setInt(3, entity.getUser().getId());
     }
 
     @Override
     protected void prepareUpdateStatement(PreparedStatement preparedStatement, Review entity) throws SQLException {
         preparedStatement.setString(1, entity.getFeedback());
         preparedStatement.setInt(2, entity.getRate());
-        preparedStatement.setInt(3, entity.getOrder().getId());
+        preparedStatement.setInt(3, entity.getUser().getId());
         preparedStatement.setInt(4, entity.getId());
     }
 
     @Override
     protected Optional<Review> parseResultSet(ResultSet resultSet) throws SQLException, DaoException {
-        int id = resultSet.getInt("order_id");
-        List<Order> orderList = OrderDao.INSTANCE.findByField(String.valueOf(id), OrderField.ID);
+        int id = resultSet.getInt("user_id");
+        List<User> userList = UserDao.INSTANCE.findByField(String.valueOf(id), UserField.ID);
 
-        if (!orderList.isEmpty()) {
+        if (!userList.isEmpty()) {
             Review review = Review.builder()
                     .withId(resultSet.getInt("id"))
                     .withFeedback(resultSet.getString("feedback"))
                     .withRate(resultSet.getInt("rate"))
-                    .withOrder(orderList.get(0))
+                    .withUser(userList.get(0))
                     .build();
             return Optional.of(review);
         }

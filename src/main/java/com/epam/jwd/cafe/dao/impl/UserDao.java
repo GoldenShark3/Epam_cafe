@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -75,7 +74,7 @@ public class UserDao extends AbstractDao<User> {
         preparedStatement.setString(5, user.getEmail());
         preparedStatement.setBigDecimal(6, user.getBalance());
         preparedStatement.setInt(7, user.getLoyaltyPoints());
-        preparedStatement.setBoolean(8, user.isBlocked());
+        preparedStatement.setBoolean(8, user.getIsBlocked());
         preparedStatement.setString(9, user.getPhoneNumber());
         preparedStatement.setInt(10, user.getRole().ordinal() + 1);
     }
@@ -119,6 +118,9 @@ public class UserDao extends AbstractDao<User> {
     private String retrieveSqlByUserField(UserField nameOfField) throws DaoException {
         StringBuilder sql = new StringBuilder(SQL_FIND_ALL);
         switch (nameOfField) {
+            case ID:
+                sql.append(" WHERE cu.id = ?");
+                break;
             case USERNAME:
                 sql.append(" WHERE username = ?");
                 break;

@@ -7,5 +7,6 @@ public enum ProductField implements EntityField<Product> {
     NAME,
     PRICE,
     IMG_NAME,
-    PRODUCT_DESCRIPTION;
+    PRODUCT_DESCRIPTION,
+    PRODUCT_TYPE_ID
 }

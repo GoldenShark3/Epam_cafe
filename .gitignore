@@ -1,3 +1,4 @@
 /.idea/
-/target/
 /epam_cafe.iml
+/out/
+/target

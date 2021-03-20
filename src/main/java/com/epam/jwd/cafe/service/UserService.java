@@ -6,7 +6,6 @@ import com.epam.jwd.cafe.exception.DaoException;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.model.dto.UserDto;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,7 +38,7 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (password.equals(user.getPassword())) {
-                if (user.isBlocked()) {
+                if (user.getIsBlocked()) {
                     return Optional.of("serverMessage.blockedAccount");
                 }
                 UserDto userDto = new UserDto(user.getId(), user.getRole());
@@ -48,6 +47,15 @@ public class UserService {
             }
         }
         return Optional.of("serverMessage.incorrectUsernameOrPassword");
+    }
+
+    public void updateUser(User user) throws ServiceException {
+        try {
+            USER_DAO.update(user);
+        } catch (DaoException e) {
+            //todo: log
+            throw new ServiceException(e);
+        }
     }
 
     public List<User> findAllUsers() throws DaoException {

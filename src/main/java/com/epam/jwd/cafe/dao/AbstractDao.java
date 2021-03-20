@@ -64,7 +64,8 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     public void deleteById(int id) throws DaoException {
         try (Connection connection = connectionPool.retrieveConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    getDeleteSql() + id)) {
+                    getDeleteSql())) {
+                preparedStatement.setInt(1, id);
                 preparedStatement.execute();
             }
         } catch (SQLException e) {
