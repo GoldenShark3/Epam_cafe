@@ -14,6 +14,7 @@ public class ApplicationConfig {
     private Integer loyaltyPointsToBlock;
 
     private ApplicationConfig() {
+        initConfig();
     }
 
     public static ApplicationConfig getInstance(){

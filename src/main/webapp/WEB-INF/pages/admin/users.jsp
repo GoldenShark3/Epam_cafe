@@ -45,7 +45,7 @@
                 <div class="form-check form-switch mt-1">
                     <label class="form-check-label" for="check-${user.id}"> <fmt:message key="label.isBlocked"/></label>
                     <input name="check" class="form-check-input" type="checkbox" id="check-${user.id}"
-                           <c:if test="${user.isBlocked}">checked</c:if>>
+                           <c:if test="${user.getIsBlocked()}">aria-checked="true"</c:if>>
                 </div>
             </td>
             <td>
@@ -69,6 +69,7 @@
         data.append('points', document.getElementById('points-' + id).value);
         data.append('check', document.getElementById('check-' + id).checked);
         data.append('command', 'update_user');
+
         jQuery.ajax({
             url: '<c:url value="/cafe"/>',
             data: data,

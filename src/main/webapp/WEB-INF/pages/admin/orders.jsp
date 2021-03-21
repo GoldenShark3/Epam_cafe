@@ -53,24 +53,38 @@
                     <div class="mt-1">${order.cost}</div>
                 </td>
 
-                <td><select id="select-${order.id}" class="form-select" aria-label="Default select example"
-                            name="select">
-                    <option value="ACTIVE" <c:if test="${order.status.name() eq 'ACTIVE'}">selected</c:if>>
-                        <fmt:message key="label.active"/>
-                    </option>
-                    <option value="CANCELLED" <c:if test="${order.status.name() eq 'CANCELLED'}">selected</c:if>>
-                        <fmt:message key="label.cancelled"/>
-                    </option>
-                    <option value="COMPLETED" <c:if test="${order.status.name() eq 'COMPLETED'}">selected</c:if>>
-                        <fmt:message key="label.completed"/>
-                    </option>
-                    <option value="UNACCEPTED" <c:if test="${order.status.name() eq 'UNACCEPTED'}">selected</c:if>>
-                        <fmt:message key="label.unaccepted"/>
-                    </option>
-                </select></td>
                 <td>
-                    <button onclick="save(${order.id})" class="btn btn-dark"><fmt:message key="button.save"/></button>
+                    <c:if test="${order.orderStatus.name() eq 'ACTIVE'}">
+                        <select id="select-${order.id}" class="form-select" aria-label="Default select example"
+                                name="select">
+                            <option value="ACTIVE" <c:if test="${order.orderStatus.name() eq 'ACTIVE'}">selected</c:if>>
+                                <fmt:message key="label.active"/>
+                            </option>
+                            <option value="CANCELLED"
+                                    <c:if test="${order.orderStatus.name() eq 'CANCELLED'}">selected</c:if>>
+                                <fmt:message key="label.cancelled"/>
+                            </option>
+                            <option value="COMPLETED"
+                                    <c:if test="${order.orderStatus.name() eq 'COMPLETED'}">selected</c:if>>
+                                <fmt:message key="label.completed"/>
+                            </option>
+                            <option value="UNACCEPTED"
+                                    <c:if test="${order.orderStatus.name() eq 'UNACCEPTED'}">selected</c:if>>
+                                <fmt:message key="label.unaccepted"/>
+                            </option>
+                        </select>
+                    </c:if>
+
+                    <c:if test="${order.orderStatus.name() ne 'ACTIVE'}">
+                        ${order.orderStatus.name()}
+                    </c:if>
                 </td>
+                <c:if test="${order.orderStatus.name() eq 'ACTIVE'}">
+                    <td>
+                        <button onclick="save(${order.id})" class="btn btn-dark"><fmt:message
+                                key="button.save"/></button>
+                    </td>
+                </c:if>
             </tr>
         </c:forEach>
         </tbody>
@@ -79,7 +93,7 @@
         <ul class="pagination">
             <app_tag:pagination pages="${requestScope.pagination_context.totalPages}"
                                 page="${requestScope.pagination_context.page}"
-                                url='/cafe?command=to_users&page='/>
+                                url='/cafe?command=to_orders&page='/>
         </ul>
     </div>
 </c:if>
@@ -101,17 +115,14 @@
         });
 
         function successSave(data) {
-            let eMessages = document.getElementById("error_message");
-            eMessages.innerText = "";
+            alert('<fmt:message key="info.saveSuccess"/>');
+
             let parse = JSON.parse(data);
 
-            let errorMessages = parse.error_message;
-            if (errorMessages != null) {
-                for (let i = 0; i < errorMessages.length; i++) {
-                    eMessages.innerText += errorMessages[i] + '\n';
-                }
-            } else {
-                alert('<fmt:message key="info.saveSuccess"/>');
+            let redirectCommand = parse.redirect_command;
+            if (redirectCommand != null) {
+                window.location.href = '<c:url value="/cafe"/>' + "?command="
+                    + redirectCommand + '&type_id=${param.type_id}' + '&page=1';
             }
         }
     }

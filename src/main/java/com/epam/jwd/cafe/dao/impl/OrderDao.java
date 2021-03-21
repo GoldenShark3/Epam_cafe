@@ -9,8 +9,12 @@ import com.epam.jwd.cafe.exception.EntityNotFoundException;
 import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.OrderStatus;
 import com.epam.jwd.cafe.model.PaymentMethod;
+import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.pool.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,9 +23,11 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class OrderDao extends AbstractDao<Order> {
+    private final Logger LOGGER = LogManager.getLogger(OrderDao.class);
     public static final OrderDao INSTANCE = new OrderDao(ConnectionPool.getInstance());
 
     private static final String SQL_FIND_ALL = "SELECT id, delivery_address, order_cost, create_date," +
@@ -31,7 +37,7 @@ public class OrderDao extends AbstractDao<Order> {
             " delivery_date, payment_method_id, status_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE = "UPDATE cafe_order SET delivery_address = ?, order_cost = ?," +
-            " create_date = ?, payment_method_id = ?, status_id = ?, user_id = ? WHERE id = ?";
+            " create_date = ?, delivery_date = ?, payment_method_id = ?, status_id = ?, user_id = ? WHERE id = ?";
 
     private static final String SQL_DELETE = "DELETE FROM cafe_order WHERE id = ?";
 
@@ -66,7 +72,46 @@ public class OrderDao extends AbstractDao<Order> {
 
     @Override
     public void create(Order entity) throws DaoException {
-        super.create(entity); //todo: change with ACID
+        try (Connection connection = ConnectionPool.getInstance().retrieveConnection()) {
+            connection.setAutoCommit(false);
+            PreparedStatement preparedStatementCreateOrder = null;
+            PreparedStatement preparedStatementAddProducts = null;
+            try {
+                preparedStatementCreateOrder = connection.prepareStatement(SQL_CREATE, Statement.RETURN_GENERATED_KEYS);
+                prepareAllOrderStatements(preparedStatementCreateOrder, entity);
+                preparedStatementCreateOrder.executeUpdate();
+                ResultSet resultSet = preparedStatementCreateOrder.getGeneratedKeys();
+                if (resultSet.next()) {
+                    int id = resultSet.getInt(1);
+                    for (Map.Entry<Product, Integer> entry : entity.getProducts().entrySet()) {
+                        preparedStatementAddProducts = connection.prepareStatement(SQL_CREATE_ORDER_PRODUCTS);
+                        preparedStatementAddProducts.setLong(1, id);
+                        preparedStatementAddProducts.setInt(2, entry.getKey().getId());
+                        preparedStatementAddProducts.setInt(3, entry.getValue());
+                        preparedStatementAddProducts.execute();
+                        preparedStatementAddProducts.close();
+                    }
+                    connection.commit();
+                    preparedStatementCreateOrder.close();
+                } else {
+                    throw new SQLException();
+                }
+            } catch (SQLException e) {
+                LOGGER.error("Failed to create order");
+                connection.rollback();
+                throw new DaoException(e);
+            } finally {
+                if (preparedStatementCreateOrder != null) {
+                    preparedStatementCreateOrder.close();
+                }
+                if (preparedStatementAddProducts != null) {
+                    preparedStatementAddProducts.close();
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Failed to create order");
+            throw new DaoException(e);
+        }
     }
 
     @Override
@@ -96,7 +141,7 @@ public class OrderDao extends AbstractDao<Order> {
                     .withProducts(ProductDao.INSTANCE.findProductsInOrder(resultSet.getInt("id")))
                     .build();
         } catch (EntityNotFoundException e) {
-            //todo: log.error("Failed to parse order result set");
+            LOGGER.error("Failed to parse order result set");
             return Optional.empty();
         }
         return Optional.of(order);
@@ -133,7 +178,7 @@ public class OrderDao extends AbstractDao<Order> {
     private User retrieveUserById(int id) throws DaoException {
         List<User> users = UserDao.INSTANCE.findByField(String.valueOf(id), UserField.ID);
         if (users.size() < 1) {
-            //todo: log.error("Failed to load user from order dao");
+            LOGGER.error("Failed to load user from order dao");
             throw new DaoException("Failed to load user from order dao");
         }
         return users.get(0);

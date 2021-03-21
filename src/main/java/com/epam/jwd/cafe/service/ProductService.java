@@ -5,8 +5,8 @@ import com.epam.jwd.cafe.dao.impl.ProductDao;
 import com.epam.jwd.cafe.exception.DaoException;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.Product;
-import com.epam.jwd.cafe.model.ProductType;
-import com.epam.jwd.cafe.util.IOUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ProductService {
+    private final Logger LOGGER = LogManager.getLogger(ProductService.class);
     public static final ProductService INSTANCE = new ProductService();
     private static final ProductDao PRODUCT_DAO = ProductDao.INSTANCE;
 
@@ -37,7 +38,7 @@ public class ProductService {
         try {
             return PRODUCT_DAO.findByField(String.valueOf(typeId), ProductField.PRODUCT_TYPE_ID);
         } catch (DaoException e) {
-            //todo: log
+            LOGGER.error("Failed to find all products with type id = " + typeId);
             throw new ServiceException(e);
         }
     }
@@ -50,7 +51,7 @@ public class ProductService {
                 return Optional.empty();
             }
         } catch (DaoException e) {
-            //todo: log
+            LOGGER.error("Failed to create product");
             throw new ServiceException(e);
         }
         return Optional.of("serverMessage.productNameAlreadyTaken");
@@ -79,7 +80,7 @@ public class ProductService {
         try {
             PRODUCT_DAO.update(product);
         } catch (DaoException e) {
-            //todo: log
+            LOGGER.error("Failed to update product");
             throw new ServiceException(e);
         }
     }
@@ -114,7 +115,7 @@ public class ProductService {
         try {
             PRODUCT_DAO.deleteById(productId);
         } catch (DaoException e) {
-            //todo: log
+            LOGGER.error("Failed to delete product with id = " + productId);
             throw new ServiceException(e);
         }
     }
@@ -124,7 +125,7 @@ public class ProductService {
         try {
             products = PRODUCT_DAO.findByField(searchableField, nameOfField);
         } catch (DaoException e) {
-            //todo: log.error("Failed on a user search");
+            LOGGER.error("Failed on a product search by field = " + nameOfField.name());
             throw new ServiceException("Failed search user by unique field", e);
         }
         return ((products.size() > 0) ? Optional.of(products.get(0)) : Optional.empty());

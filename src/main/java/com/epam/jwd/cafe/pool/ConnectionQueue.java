@@ -1,5 +1,8 @@
 package com.epam.jwd.cafe.pool;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -13,6 +16,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionQueue {
+    private final Logger LOGGER = LogManager.getLogger(ConnectionQueue.class);
     public static ConnectionQueue instance;
     private final Queue<Connection> FREE_CONNECTIONS;
     private final Queue<Connection> TAKEN_CONNECTIONS;
@@ -89,7 +93,7 @@ public class ConnectionQueue {
             }
 
         } catch (SQLException e) {
-//            log.error("Failed to close a connection");
+            LOGGER.error("Failed to close a connection. " + e);
         }
         if (withDeregistration) {
             Enumeration<Driver> drivers = DriverManager.getDrivers();

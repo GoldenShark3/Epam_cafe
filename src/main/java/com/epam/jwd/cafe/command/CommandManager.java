@@ -5,6 +5,7 @@ import com.epam.jwd.cafe.command.impl.AddProductTypeCommand;
 import com.epam.jwd.cafe.command.impl.AddProductToCartCommand;
 import com.epam.jwd.cafe.command.impl.AddReviewCommand;
 import com.epam.jwd.cafe.command.impl.ChangeLocaleCommand;
+import com.epam.jwd.cafe.command.impl.CreateOrderCommand;
 import com.epam.jwd.cafe.command.impl.DeleteProductCommand;
 import com.epam.jwd.cafe.command.impl.DeleteProductFromCartCommand;
 import com.epam.jwd.cafe.command.impl.DeleteProductTypeCommand;
@@ -23,6 +24,7 @@ import com.epam.jwd.cafe.command.impl.ToLoginCommand;
 import com.epam.jwd.cafe.command.impl.ToMainPageCommand;
 import com.epam.jwd.cafe.command.impl.ToMenuCommand;
 import com.epam.jwd.cafe.command.impl.ToMenuItemCommand;
+import com.epam.jwd.cafe.command.impl.ToNotFoundPageCommand;
 import com.epam.jwd.cafe.command.impl.ToOrdersCommand;
 import com.epam.jwd.cafe.command.impl.ToProfileCommand;
 import com.epam.jwd.cafe.command.impl.ToRegistrationCommand;
@@ -60,7 +62,8 @@ public enum CommandManager {
     EDIT_PRODUCT(new EditProductCommand(), "edit_product"),
     DELETE_PRODUCT(new DeleteProductCommand(), "delete_product"),
     DELETE_PRODUCT_FROM_CART(new DeleteProductFromCartCommand(), "delete_from_cart"),
-    ADD_REVIEW(new AddReviewCommand(), "add_review");
+    ADD_REVIEW(new AddReviewCommand(), "add_review"),
+    CREATE_ORDER(new CreateOrderCommand(), "create_order");
 
     private final Command command;
     private final String commandName;
@@ -84,7 +87,7 @@ public enum CommandManager {
                 return action.command;
             }
         }
-        return new ToErrorPageCommand(); //TODO: change to ERROR_404
+        return ToNotFoundPageCommand.INSTANCE;
     }
 
 }

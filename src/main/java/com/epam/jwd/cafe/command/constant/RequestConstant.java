@@ -32,7 +32,10 @@ public class RequestConstant {
     public final static String TOTAL_COST = "total_cost";
     public final static String REVIEW = "review";
     public final static String RATE = "rating";
-    public final static String REVIEWS = "reviews";
+    public final static String DELIVERY_DATE = "delivery_date";
+    public final static String DELIVERY_ADDRESS = "delivery_address";
+    public final static String PAYMENT_METHOD = "payment_method";
+    public final static String DELIVERY_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm";
 
     private RequestConstant() {
     }

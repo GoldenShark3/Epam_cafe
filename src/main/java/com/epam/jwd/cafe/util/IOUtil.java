@@ -1,8 +1,12 @@
 package com.epam.jwd.cafe.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 
 public class IOUtil {
+    private static final Logger LOGGER = LogManager.getLogger(IOUtil.class);
     private static final String DATA_DIR = "C:\\Users\\Aleksey\\Desktop\\EPAM\\EpamCafe\\src\\main\\webapp\\data\\";
 
     private IOUtil() {
@@ -10,9 +14,8 @@ public class IOUtil {
 
     public static void deleteData(String fileName) {
         File file = new File(DATA_DIR + fileName);
-        file.delete();
-//        if (!file.delete()) {
-            //todo: log.error("Failed to delete upload with filename: " + filename);
-//        }
+        if (!file.delete()) {
+            LOGGER.error("Failed to delete upload with filename = " + fileName);
+        }
     }
 }

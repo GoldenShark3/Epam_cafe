@@ -2,6 +2,9 @@ package com.epam.jwd.cafe.pool;
 
 import com.epam.jwd.cafe.config.DatabaseConfig;
 import com.epam.jwd.cafe.exception.ApplicationStartException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,6 +13,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
+    private final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private static ConnectionPool instance;
     private ConnectionQueue connections;
     private static final DatabaseConfig DATABASE_CONFIG = DatabaseConfig.getInstance();
@@ -53,7 +57,7 @@ public class ConnectionPool {
         try {
             return connections.take();
         } catch (InterruptedException e) {
-//            log.error("Waiting for a connection was interrupted");
+            LOGGER.error("Waiting for a connection was interrupted");
             throw new RuntimeException();
         }
     }
@@ -64,7 +68,7 @@ public class ConnectionPool {
             connections.removeConnectionFromTaken(connection);
             connections.put(connection);
         } else {
-//            log.warn("Connection is fake");
+            LOGGER.warn("Connection is fake");
         }
     }
 

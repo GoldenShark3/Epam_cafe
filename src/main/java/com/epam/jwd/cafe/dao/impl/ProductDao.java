@@ -8,11 +8,13 @@ import com.epam.jwd.cafe.exception.DaoException;
 import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.ProductType;
 import com.epam.jwd.cafe.pool.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ProductDao extends AbstractDao<Product> {
+    private final Logger LOGGER = LogManager.getLogger(ProductDao.class);
     public static final ProductDao INSTANCE = new ProductDao(ConnectionPool.getInstance());
 
     private static final String SQL_FIND_ALL = "SELECT id, product_name, price, img_name," +
@@ -120,7 +123,7 @@ public class ProductDao extends AbstractDao<Product> {
                 }
             }
         } catch (SQLException e) {
-            //todo: log.error("Failed to find products in order by id in product dao");
+            LOGGER.error("Failed to find products in order by id", e);
             throw new DaoException("Failed to find products in order by id");
         }
         return products;
@@ -137,7 +140,7 @@ public class ProductDao extends AbstractDao<Product> {
     private ProductType retrieveProductTypeById(int id) throws DaoException {
         List<ProductType> productTypeList = ProductTypeDao.INSTANCE.findByField(String.valueOf(id), ProductTypeField.ID);
         if (productTypeList.size() < 1) {
-            //todo: log.warn("Failed to load product type in productDao");
+            LOGGER.warn("Failed to load product type in productDao");
             throw new DaoException("Failed to load product type");
         }
         return productTypeList.get(0);

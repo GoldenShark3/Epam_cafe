@@ -1,6 +1,7 @@
 package com.epam.jwd.cafe.command.impl;
 
 import com.epam.jwd.cafe.command.Command;
+import com.epam.jwd.cafe.command.CommandManager;
 import com.epam.jwd.cafe.command.ForwardResponseType;
 import com.epam.jwd.cafe.command.RequestContext;
 import com.epam.jwd.cafe.command.ResponseContext;
@@ -12,6 +13,7 @@ import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.OrderStatus;
 import com.epam.jwd.cafe.service.OrderService;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class UpdateOrderCommand implements Command {
@@ -19,6 +21,7 @@ public class UpdateOrderCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext request) {
+        Map<String, Object> requestMap = new HashMap<>();
         try {
             int orderId = Integer.parseInt(request.getRequestParameters().get(RequestConstant.ID));
             OrderStatus orderStatus = OrderStatus.valueOf(request.getRequestParameters().get(RequestConstant.SELECT));
@@ -36,11 +39,12 @@ public class UpdateOrderCommand implements Command {
                         .withCost(orderOptional.get().getCost())
                         .build();
                 ORDER_SERVICE.updateOrder(order);
-                return new ResponseContext(new RestResponseType(), new HashMap<>(), new HashMap<>());
+                requestMap.put(RequestConstant.REDIRECT_COMMAND, CommandManager.TO_ORDERS.getCommandName());
+                return new ResponseContext(new RestResponseType(), requestMap, new HashMap<>());
             }
         } catch (ServiceException e) {
             //todo: log
         }
-        return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE));
+        return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), requestMap, new HashMap<>());
     }
 }

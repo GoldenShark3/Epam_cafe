@@ -1,5 +1,8 @@
 package com.epam.jwd.cafe.tag;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -9,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PaginationTag extends TagSupport {
+    private final Logger LOGGER = LogManager.getLogger(PaginationTag.class);
     private int pages;
     private int page;
     private String url;
@@ -77,7 +81,7 @@ public class PaginationTag extends TagSupport {
         try {
             out.write(stringBuilder.toString());
         } catch (IOException e) {
-            //todo: log.error("Failed to print pagination", e);
+            LOGGER.error("Failed to print pagination", e);
         }
         return SKIP_BODY;
     }

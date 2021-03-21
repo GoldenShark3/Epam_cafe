@@ -1,6 +1,9 @@
 package com.epam.jwd.cafe.listener;
 
 import com.epam.jwd.cafe.pool.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -8,6 +11,7 @@ import java.sql.SQLException;
 
 @WebListener
 public class ApplicationListener implements ServletContextListener {
+    private final Logger LOGGER = LogManager.getLogger(ApplicationListener.class);
     private ConnectionPool connectionPool;
 
     @Override
@@ -16,7 +20,7 @@ public class ApplicationListener implements ServletContextListener {
         try {
             connectionPool.initConnectionPool();
         } catch (ClassNotFoundException e) {
-            //todo: log.error("failed to init connection pool", e);
+            LOGGER.error("failed to init connection pool", e);
         }
 
     }
@@ -26,7 +30,7 @@ public class ApplicationListener implements ServletContextListener {
         try {
             connectionPool.destroyConnectionPool(true);
         } catch (SQLException e) {
-            //todo: log.error("Failed to destroy connection pool")
+            LOGGER.error("Failed to destroy connection pool", e);
         }
     }
 }

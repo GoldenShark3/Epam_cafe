@@ -6,11 +6,15 @@ import com.epam.jwd.cafe.exception.DaoException;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.model.dto.UserDto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class UserService {
+    private final Logger LOGGER = LogManager.getLogger(UserService.class);
     public static final UserService INSTANCE = new UserService();
     private final UserDao USER_DAO = UserDao.INSTANCE;
 
@@ -24,7 +28,7 @@ public class UserService {
                     USER_DAO.create(user);
                     return Optional.empty();
                 } catch (DaoException e) {
-//                    log.error("UserDao provided an exception");
+                    LOGGER.error("Failed to register user: " + user);
                     throw new ServiceException(e);
                 }
             }
@@ -53,7 +57,7 @@ public class UserService {
         try {
             USER_DAO.update(user);
         } catch (DaoException e) {
-            //todo: log
+            LOGGER.error("Failed to update user");
             throw new ServiceException(e);
         }
     }
@@ -74,16 +78,12 @@ public class UserService {
         return findUserByUniqueField(email, UserField.EMAIL);
     }
 
-    public Optional<User> findByPhoneNumber(String phoneNumber) throws ServiceException {
-        return findUserByUniqueField(phoneNumber, UserField.PHONE_NUMBER);
-    }
-
     private Optional<User> findUserByUniqueField(String searchableField, UserField nameOfField) throws ServiceException {
         List<User> users;
         try {
             users = USER_DAO.findByField(searchableField, nameOfField);
         } catch (DaoException e) {
-            //todo: log.error("Failed on a user search");
+            LOGGER.error("Failed on a user search with field = " + nameOfField);
             throw new ServiceException("Failed search user by unique field", e);
         }
         return ((users.size() > 0) ? Optional.of(users.get(0)) : Optional.empty());

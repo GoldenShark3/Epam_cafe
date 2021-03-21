@@ -1,5 +1,8 @@
 package com.epam.jwd.cafe.pool;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -20,6 +23,7 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class ProxyConnection implements Connection {
+    private final Logger LOGGER = LogManager.getLogger(ProxyConnection.class);
     private final Connection connection;
 
     ProxyConnection(Connection connection) {
@@ -71,7 +75,7 @@ public class ProxyConnection implements Connection {
         try {
             ConnectionPool.getInstance().releaseConnection(this);
         } catch (InterruptedException e) {
-            //todo: log - "Failed to return connection in connection pool"
+            LOGGER.error("Failed to return connection in connection pool");
         }
     }
 

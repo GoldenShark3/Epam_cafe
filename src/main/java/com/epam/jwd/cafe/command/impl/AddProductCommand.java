@@ -53,7 +53,7 @@ public class AddProductCommand implements Command {
 
                 if (productTypeOptional.isPresent()) {
                     Product product = Product.builder()
-                            .withId(productTypeId)  //todo: change
+                            .withId(productTypeId)
                             .withName(productName)
                             .withProductType(productTypeOptional.get())
                             .withDescription(productDescription)
