@@ -35,6 +35,9 @@
                                         type="button">
                                     <i class="fa fa-pencil-square-o"></i>
                                 </button>
+                                <button class="btn btn-primary mt-2" type="button" onclick="addBalance()">
+                                    <i class="fa fa-credit-card-alt"></i>
+                                </button>
                             </div>
                         </div>
 
@@ -113,7 +116,7 @@
                                value='${requestScope.user.phoneNumber}'
                                pattern="^\+375((44)|(33)|(29)|25)[0-9]{7}$" required/>
                         <div class="invalid-feedback">
-                            <fmt:message key="error.phoneNumber"/>
+                            <fmt:message key="serverMessage.phoneNumber"/>
                         </div>
                     </div>
                 </div>
@@ -129,7 +132,7 @@
         </div>
     </div>
 <script>
-    function onAjaxSuccess(data) {
+        function onAjaxSuccess(data) {
         let pMessages = document.getElementById("server_message");
         let eMessages = document.getElementById("error_message");
         pMessages.innerText = "";
@@ -155,6 +158,31 @@
             window.location.href = '<c:url value="/cafe"/>' + "?command=" + redirectCommand
         }
     }
+
+        async function addBalance() {
+            let data = new FormData();
+            data.append('command', 'add_balance_to_user')
+            jQuery.ajax({
+                url: '<c:url value="/cafe"/>',
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'POST',
+                success: addBalanceSuccess
+            });
+
+            function addBalanceSuccess(data) {
+                alert('<fmt:message key="info.addMoneySuccess"/>');
+                let parse = JSON.parse(data);
+                let redirectCommand = parse.redirect_command;
+                if (redirectCommand != null) {
+                    window.location.href = '<c:url value="/cafe"/>' + "?command=" + redirectCommand;
+                }
+            }
+
+        }
+
 </script>
 </div>
 <c:import url="../../parts/footer.jsp"/>

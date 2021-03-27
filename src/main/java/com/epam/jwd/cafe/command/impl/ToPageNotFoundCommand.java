@@ -8,7 +8,7 @@ import com.epam.jwd.cafe.command.constant.PageConstant;
 
 import java.util.HashMap;
 
-public class PageNotFoundCommand implements Command {
+public class ToPageNotFoundCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext request) {

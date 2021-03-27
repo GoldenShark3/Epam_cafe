@@ -14,8 +14,10 @@ public class PageConstant {
     public static final String ADD_PRODUCT = "/WEB-INF/pages/admin/addProduct.jsp";
     public static final String CREATE_ORDER = "/WEB-INF/pages/secured/createOrder.jsp";
     public static final String REVIEW_PAGE = "WEB-INF/pages/secured/review.jsp";
-    public static final String ERROR_404 = "/WEB-INF/pages/404.jsp";
-    public static final String ERROR_PAGE = "/WEB-INF/pages/error.jsp";
+    public static final String MY_ORDERS_PAGE = "WEB-INF/pages/secured/myOrders.jsp";
+    public static final String ERROR_404 = "/WEB-INF/pages/error/404.jsp";
+    public static final String ERROR_PAGE = "/WEB-INF/pages/error/error.jsp";
+    public static final String ACCESS_BLOCKED_PAGE = "/WEB-INF/pages/error/blockedAccess.jsp";
 
     private PageConstant() {
     }

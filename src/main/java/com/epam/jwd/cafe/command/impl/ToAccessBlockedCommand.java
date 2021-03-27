@@ -8,10 +8,10 @@ import com.epam.jwd.cafe.command.constant.PageConstant;
 
 import java.util.HashMap;
 
-public class ToErrorPageCommand implements Command {
+public class ToAccessBlockedCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext request) {
-        return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), new HashMap<>(), new HashMap<>());
+        return new ResponseContext(new ForwardResponseType(PageConstant.ACCESS_BLOCKED_PAGE), new HashMap<>(), new HashMap<>());
     }
 }

@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     @Override
     public void create(final T entity) throws DaoException {
         try (Connection connection = connectionPool.retrieveConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(getCreateSql())) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(getCreateSql(), Statement.RETURN_GENERATED_KEYS)) {
                 prepareCreateStatement(preparedStatement, entity);
                 preparedStatement.execute();
             }

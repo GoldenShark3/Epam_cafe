@@ -6,11 +6,12 @@ import com.epam.jwd.cafe.command.RedirectResponseType;
 import com.epam.jwd.cafe.command.RequestContext;
 import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.UserCommand;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogoutCommand implements Command {
+public class LogoutCommand implements Command, UserCommand {
 
     @Override
     public ResponseContext execute(RequestContext request) {

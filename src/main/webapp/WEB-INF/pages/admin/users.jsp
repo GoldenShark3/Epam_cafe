@@ -19,33 +19,47 @@
 <p class="display-2 text-center"><fmt:message key="title.users"/></p>
 <table class="table table-bordered">
     <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col"><fmt:message key="label.firstName"/></th>
-            <th scope="col"><fmt:message key="label.lastName"/></th>
-            <th scope="col"><fmt:message key="label.phoneNumber"/></th>
-            <th scope="col"><fmt:message key="label.loyaltyPoints"/></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col"><fmt:message key="label.firstName"/></th>
+        <th scope="col"><fmt:message key="label.lastName"/></th>
+        <th scope="col"><fmt:message key="label.phoneNumber"/></th>
+        <th scope="col"><fmt:message key="label.loyaltyPoints"/></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
     </thead>
     <tbody>
+    <p id="error_message" class="text-danger text-center" style="font-size: 25px">${error_message}</p>
     <c:forEach items="${requestScope.pagination_context.objectList}" var="user">
         <tr>
-            <th scope="row"><div class="mt-1">${user.id}</div></th>
-            <td><div class="mt-1">${user.firstName}</div></td>
-            <td><div class="mt-1">${user.lastName}</div></td>
-            <td><div class="mt-1">${user.phoneNumber}</div></td>
+            <th scope="row">
+                <div class="mt-1">${user.id}</div>
+            </th>
             <td>
-                <p id="error_message" class="text-danger">${error_message}</p>
+                <div class="mt-1">${user.firstName}</div>
+            </td>
+            <td>
+                <div class="mt-1">${user.lastName}</div>
+            </td>
+            <td>
+                <div class="mt-1">${user.phoneNumber}</div>
+            </td>
+            <td>
                 <input name="points" class="form-control" type="text" id="points-${user.id}"
                        value="${user.loyaltyPoints}" style="max-width: 9rem;">
             </td>
             <td>
                 <div class="form-check form-switch mt-1">
                     <label class="form-check-label" for="check-${user.id}"> <fmt:message key="label.isBlocked"/></label>
-                    <input name="check" class="form-check-input" type="checkbox" id="check-${user.id}"
-                           <c:if test="${user.getIsBlocked()}">aria-checked="true"</c:if>>
+                    <c:if test="${user.isBlocked}">
+                        <input name="check" class="form-check-input" type="checkbox" id="check-${user.id}" checked>
+                    </c:if>
+
+                    <c:if test="${not user.isBlocked}">
+                        <input name="check" class="form-check-input" type="checkbox" id="check-${user.id}">
+                    </c:if>
+
                 </div>
             </td>
             <td>
@@ -96,6 +110,6 @@
         }
     }
 </script>
-    <c:import url="../../parts/footer.jsp"/>
+<c:import url="../../parts/footer.jsp"/>
 </body>
 </html>

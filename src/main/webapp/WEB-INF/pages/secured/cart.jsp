@@ -46,14 +46,14 @@
                                         <form name="deleteFromCart-${item.getKey().id}" method="post"
                                               action="<c:url value="/cafe"/>" class="needs-validation w-100" novalidate>
                                             <input type="hidden" name="id" value="${item.getKey().id}">
-                                            <input type="hidden" name="command" value="delete_from_cart">
+                                            <input type="hidden" name="command" value="delete_product_from_cart">
                                             <button type="submit" onclick="add(${item.getKey().id}, -1)"
                                                     class="btn btn-danger" style="width: 2rem;">-
                                             </button>
                                         </form>
 
                                         <button id="${item.getKey().id}" type="button" class="btn btn-outline-dark mb-4"
-                                                style="min-width: 3rem; border-width: 0" disabled>${item.getValue()}
+                                                style="min-width: 4rem; border-width: 0" disabled>${item.getValue()}
                                         </button>
 
                                         <form name="addToCart-${item.getKey().id}"

@@ -44,7 +44,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=to_my_orders"/>">
+                        <a class="nav-link active" aria-current="page" href="<c:url value="/cafe?command=to_my_orders&page=1"/>">
                             <fmt:message key="link.myOrders"/></a>
                     </li>
 

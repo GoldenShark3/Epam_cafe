@@ -7,17 +7,22 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.Handler;
 import com.epam.jwd.cafe.handler.impl.NumberHandler;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class UpdateUserCommand implements Command {
+public class UpdateUserCommand implements Command, AdminCommand {
+    private static final Logger LOGGER = LogManager.getLogger(UpdateUserCommand.class);
     private static final UserService USER_SERVICE = UserService.INSTANCE;
 
     @Override
@@ -29,7 +34,8 @@ public class UpdateUserCommand implements Command {
             try {
                 int id = Integer.parseInt(request.getRequestParameters().get(RequestConstant.ID));
                 int loyaltyPoints = Integer.parseInt(request.getRequestParameters().get(RequestConstant.LOYALTY_POINTS));
-                boolean isUserBlocked = Boolean.getBoolean(request.getRequestParameters().get(RequestConstant.IS_BLOCKED));
+                String checkUserBlock = request.getRequestParameters().get(RequestConstant.IS_BLOCKED);
+                boolean isUserBlocked = Boolean.parseBoolean(checkUserBlock);
                 Optional<User> userOptional = USER_SERVICE.findById(id);
 
                 if (userOptional.isPresent()) {
@@ -52,7 +58,7 @@ public class UpdateUserCommand implements Command {
                     return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE));
                 }
             } catch (ServiceException e) {
-                //todo: log
+                LOGGER.error("Failed update user", e);
             }
         }
         Map<String,Object> requestMap = new HashMap<>();

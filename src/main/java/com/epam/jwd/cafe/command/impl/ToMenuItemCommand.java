@@ -12,6 +12,8 @@ import com.epam.jwd.cafe.model.ProductType;
 import com.epam.jwd.cafe.service.ProductService;
 import com.epam.jwd.cafe.service.ProductTypeService;
 import com.epam.jwd.cafe.util.PaginationContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ToMenuItemCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(ToMenuItemCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;
     private static final ProductTypeService PRODUCT_TYPE_SERVICE = ProductTypeService.INSTANCE;
 
@@ -43,7 +46,7 @@ public class ToMenuItemCommand implements Command {
                 responseContext = new ResponseContext(new ForwardResponseType(PageConstant.PRODUCTS_PAGE), new HashMap<>(), new HashMap<>());
             }
         } catch (ServiceException | NumberFormatException e) {
-            //todo: log.error("Moving to menu item has failed", e);
+            LOGGER.error("Moving to menu item has failed", e);
             responseContext = new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), new HashMap<>(), new HashMap<>());
         }
         return responseContext;

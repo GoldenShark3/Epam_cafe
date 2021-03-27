@@ -18,9 +18,12 @@ import com.epam.jwd.cafe.handler.impl.PhoneNumberHandler;
 import com.epam.jwd.cafe.handler.impl.UsernameHandler;
 import com.epam.jwd.cafe.model.Role;
 import com.epam.jwd.cafe.model.User;
+import com.epam.jwd.cafe.model.dto.UserDto;
 import com.epam.jwd.cafe.service.UserService;
 import com.epam.jwd.cafe.util.LocalizationMessage;
 import com.epam.jwd.cafe.util.PasswordEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -29,6 +32,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class RegistrationCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(RegistrationCommand.class);
     private static final UserService USER_SERVICE = UserService.INSTANCE;
     private static final Handler REGISTRATION_HANDLER = new NameHandler(new PasswordHandler(
             new MatchingPasswordsHandler(
@@ -67,15 +71,14 @@ public class RegistrationCommand implements Command {
 
                 if (!serverMessage.isPresent()) {
                     Map<String, Object> sessionMap = new HashMap<>();
-                    sessionMap.put("user", user);
-                    requestMap.put(RequestConstant.REDIRECT_COMMAND, CommandManager.TO_MAIN.getCommandName());
+                    requestMap.put(RequestConstant.REDIRECT_COMMAND, CommandManager.TO_LOGIN.getCommandName());
                     responseContext = new ResponseContext(new RestResponseType(), requestMap, sessionMap);
                 } else {
                     requestMap.put(RequestConstant.SERVER_MESSAGE, LocalizationMessage.localize(request.getLocale(), serverMessage.get()));
                     responseContext = new ResponseContext(new RestResponseType(), requestMap);
                 }
             } catch (ServiceException e) {
-//                todo: log.error("Registration failed" + e);
+                LOGGER.error("Registration failed", e);
                 responseContext = new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE));
             }
         } else {

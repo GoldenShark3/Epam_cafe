@@ -10,7 +10,7 @@ public class PaginationContext<T> {
     private final int totalPages;
 
     public PaginationContext(List<T> objectList, int page) {
-        this.objectList = extractObjects(objectList, page);
+        this.objectList = receiveObjects(objectList, page);
         this.page = page;
         this.totalPages = (int) Math.ceil((double) objectList.size() / PER_PAGE);
     }
@@ -31,14 +31,11 @@ public class PaginationContext<T> {
         return totalPages;
     }
 
-    private List<T> extractObjects(List<T> objectList, int page) {
+    private List<T> receiveObjects(List<T> objectList, int page) {
         List<T> copyObjects = new ArrayList<>();
 
         int start = (page - 1) * PER_PAGE;
-        int end = page * PER_PAGE;
-        int diff = Math.abs(objectList.size() - end);
-
-        end = (diff >= PER_PAGE) ? end : end - diff;
+        int end = Math.min(page * PER_PAGE, objectList.size());
 
         for(int i = start; i < end; i++){
             copyObjects.add(objectList.get(i));

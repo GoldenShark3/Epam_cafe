@@ -44,7 +44,7 @@ public class OrderService {
         if (orderUser.getIsBlocked()) {
             return Optional.of("serverMessage.blockedAccount");
         }
-        if (orderUser.getBalance().compareTo(BigDecimal.ZERO) <= 0
+        if (orderUser.getBalance().compareTo(order.getCost()) <= 0
                 && order.getPaymentMethod().equals(PaymentMethod.BALANCE)) {
             return Optional.of("serverMessage.insufficientBalance");
         }
@@ -115,7 +115,7 @@ public class OrderService {
 
         if (orderStatus.equals(OrderStatus.UNACCEPTED) && paymentMethod.equals(PaymentMethod.BALANCE)) {
             userBuilder.withLoyaltyPoints(order.getUser().getLoyaltyPoints() - orderCost.intValue() * pointsPerDollar - pointsPerDollar);
-            if (userBuilder.build().getLoyaltyPoints() < applicationConfig.getLoyaltyPointsToBlock()) {
+            if (userBuilder.build().getLoyaltyPoints() <= applicationConfig.getLoyaltyPointsToBlock()) {
                 userBuilder.withIsBlocked(true);
             }
         }

@@ -6,16 +6,20 @@ import com.epam.jwd.cafe.command.RequestContext;
 import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.DaoException;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.service.UserService;
 import com.epam.jwd.cafe.util.PaginationContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ToUsersCommand implements Command {
+public class ToUsersCommand implements Command, AdminCommand {
+    private static final Logger LOGGER = LogManager.getLogger(ToUsersCommand.class);
     private static final UserService USER_SERVICE = UserService.INSTANCE;
 
     @Override
@@ -35,7 +39,7 @@ public class ToUsersCommand implements Command {
                         new ForwardResponseType(PageConstant.USERS_PAGE), new HashMap<>(), new HashMap<>());
             }
         } catch (DaoException e) {
-            //todo: log
+            LOGGER.error("Failed move to users", e);
             responseContext = new ResponseContext(
                     new ForwardResponseType(PageConstant.ERROR_PAGE), new HashMap<>(), new HashMap<>());
         }

@@ -16,11 +16,11 @@
 <body>
 <c:import url="../../parts/navbar.jsp"/>
 
-<c:if test="${requestScope.containsKey('pagination_context') == false}">
+<c:if test="${not requestScope.containsKey('pagination_context')}">
     <p class="text-center justify-content-center display-1 mb-4"><fmt:message key="title.emptyOrders"/></p>
 </c:if>
 
-<c:if test="${requestScope.containsKey('pagination_context') == true}">
+<c:if test="${requestScope.containsKey('pagination_context')}">
     <p class="display-2 text-center"><fmt:message key="title.orders"/></p>
     <table class="table table-bordered">
         <thead>
@@ -50,7 +50,7 @@
                     <div class="mt-1">${order.deliveryAddress}</div>
                 </td>
                 <td>
-                    <div class="mt-1">${order.cost}</div>
+                    <div class="mt-1">${order.cost}$</div>
                 </td>
 
                 <td>
@@ -76,7 +76,15 @@
                     </c:if>
 
                     <c:if test="${order.orderStatus.name() ne 'ACTIVE'}">
-                        ${order.orderStatus.name()}
+                        <c:if test="${order.orderStatus.name() eq 'CANCELLED'}">
+                            <fmt:message key="label.cancelled"/>
+                        </c:if>
+                        <c:if test="${order.orderStatus.name() eq 'COMPLETED'}">
+                            <fmt:message key="label.completed"/>
+                        </c:if>
+                        <c:if test="${order.orderStatus.name() eq 'UNACCEPTED'}">
+                            <fmt:message key="label.unaccepted"/>
+                        </c:if>
                     </c:if>
                 </td>
                 <c:if test="${order.orderStatus.name() eq 'ACTIVE'}">

@@ -7,15 +7,19 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.UserCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.impl.NumberHandler;
 import com.epam.jwd.cafe.service.ProductService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class AddProductToCartCommand implements Command {
+public class AddProductToCartCommand implements Command, UserCommand {
+    private static final Logger LOGGER = LogManager.getLogger(AddProductToCartCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;
 
     @Override
@@ -42,7 +46,7 @@ public class AddProductToCartCommand implements Command {
                 }
 
             } catch (ServiceException e) {
-                //todo: log
+                LOGGER.error("Failed to add product to cart", e);
             }
         }
         return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), new HashMap<>(), new HashMap<>());

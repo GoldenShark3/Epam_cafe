@@ -8,21 +8,26 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.service.ProductService;
 import com.epam.jwd.cafe.util.IOUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class DeleteProductCommand implements Command {
+public class DeleteProductCommand implements Command, AdminCommand {
+    private static final Logger LOGGER = LogManager.getLogger(DeleteProductCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;
 
     @Override
     public ResponseContext execute(RequestContext request) {
-        int productId = Integer.parseInt(request.getRequestParameters().get(RequestConstant.ID));
         try {
+            int productId = Integer.parseInt(request.getRequestParameters().get(RequestConstant.ID));
             Optional<Product> productOptional = PRODUCT_SERVICE.findProductById(productId);
 
             if (productOptional.isPresent()) {
@@ -36,7 +41,7 @@ public class DeleteProductCommand implements Command {
             }
 
         } catch (ServiceException | NumberFormatException e) {
-            //todo:log
+            LOGGER.error("Failed to delete product or incorrect product id", e);
         }
         return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), new HashMap<>(), new HashMap<>());
     }

@@ -8,6 +8,7 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.Handler;
 import com.epam.jwd.cafe.handler.impl.DescriptionHandler;
@@ -19,6 +20,8 @@ import com.epam.jwd.cafe.model.ProductType;
 import com.epam.jwd.cafe.service.ProductService;
 import com.epam.jwd.cafe.service.ProductTypeService;
 import com.epam.jwd.cafe.util.LocalizationMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.Part;
 import java.io.FilePermission;
@@ -30,7 +33,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-public class AddProductCommand implements Command {
+public class AddProductCommand implements Command, AdminCommand {
+    private static final Logger LOGGER = LogManager.getLogger(AddProductCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;
     private static final ProductTypeService PRODUCT_TYPE_SERVICE = ProductTypeService.INSTANCE;
     private static final Handler PRODUCT_HANDLER = new ProductNameHandler(new PriceHandler(
@@ -73,7 +77,7 @@ public class AddProductCommand implements Command {
                     return new ResponseContext(new RestResponseType(), requestMap, new HashMap<>());
                 }
             } catch (ServiceException | IOException e) {
-                //todo: log
+                LOGGER.error("Filed to add product", e);
             }
         } else {
             requestMap.put(RequestConstant.ERROR_MESSAGE, errorMessages);

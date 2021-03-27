@@ -1,5 +1,6 @@
 package com.epam.jwd.cafe.command;
 
+import com.epam.jwd.cafe.command.impl.AddBalanceCommand;
 import com.epam.jwd.cafe.command.impl.AddProductCommand;
 import com.epam.jwd.cafe.command.impl.AddProductTypeCommand;
 import com.epam.jwd.cafe.command.impl.AddProductToCartCommand;
@@ -15,6 +16,7 @@ import com.epam.jwd.cafe.command.impl.EditProfileCommand;
 import com.epam.jwd.cafe.command.impl.LoginCommand;
 import com.epam.jwd.cafe.command.impl.LogoutCommand;
 import com.epam.jwd.cafe.command.impl.RegistrationCommand;
+import com.epam.jwd.cafe.command.impl.ToAccessBlockedCommand;
 import com.epam.jwd.cafe.command.impl.ToAddProductCommand;
 import com.epam.jwd.cafe.command.impl.ToAddTypeCommand;
 import com.epam.jwd.cafe.command.impl.ToCartCommand;
@@ -24,6 +26,7 @@ import com.epam.jwd.cafe.command.impl.ToLoginCommand;
 import com.epam.jwd.cafe.command.impl.ToMainPageCommand;
 import com.epam.jwd.cafe.command.impl.ToMenuCommand;
 import com.epam.jwd.cafe.command.impl.ToMenuItemCommand;
+import com.epam.jwd.cafe.command.impl.ToMyOrdersCommand;
 import com.epam.jwd.cafe.command.impl.ToNotFoundPageCommand;
 import com.epam.jwd.cafe.command.impl.ToOrdersCommand;
 import com.epam.jwd.cafe.command.impl.ToProfileCommand;
@@ -37,7 +40,7 @@ public enum CommandManager {
     TO_LOGIN(new ToLoginCommand(), "to_login"),
     TO_REGISTRATION(new ToRegistrationCommand(), "to_registration"),
     TO_MAIN(new ToMainPageCommand(), "to_main"),
-    TO_USER_PROFILE(new ToProfileCommand(), "to_profile"),
+    TO_PROFILE(new ToProfileCommand(), "to_profile"),
     TO_USERS(new ToUsersCommand(), "to_users"),
     TO_CART(new ToCartCommand(), "to_cart"),
     TO_ORDERS(new ToOrdersCommand(), "to_orders"),
@@ -47,11 +50,13 @@ public enum CommandManager {
     TO_ADD_PRODUCT(new ToAddProductCommand(), "to_add_product"),
     TO_CREATE_ORDER(new ToCreateOrderCommand(), "to_create_order"),
     TO_REVIEW(new ToReviewCommand(), "to_review"),
+    TO_ACCESS_BLOCKED(new ToAccessBlockedCommand(), "to_access_blocked"),
+    TO_MY_ORDERS(new ToMyOrdersCommand(), "to_my_orders"),
     LOGIN(new LoginCommand(), "login"),
     LOGOUT(new LogoutCommand(), "logout"),
     REGISTRATION(new RegistrationCommand(), "registration"),
     LOCALE_SWITCH(new ChangeLocaleCommand(), "locale_switch"),
-    EDIT_USER_PROFILE(new EditProfileCommand(), "edit_profile"),
+    EDIT_PROFILE(new EditProfileCommand(), "edit_profile"),
     UPDATE_USER(new UpdateUserCommand(), "update_user"),
     UPDATE_ORDER(new UpdateOrderCommand(), "update_order"),
     ADD_PRODUCT_TYPE(new AddProductTypeCommand(), "add_product_type"),
@@ -61,9 +66,10 @@ public enum CommandManager {
     ADD_TO_CART(new AddProductToCartCommand(), "add_to_cart"),
     EDIT_PRODUCT(new EditProductCommand(), "edit_product"),
     DELETE_PRODUCT(new DeleteProductCommand(), "delete_product"),
-    DELETE_PRODUCT_FROM_CART(new DeleteProductFromCartCommand(), "delete_from_cart"),
+    DELETE_PRODUCT_FROM_CART(new DeleteProductFromCartCommand(), "delete_product_from_cart"),
     ADD_REVIEW(new AddReviewCommand(), "add_review"),
-    CREATE_ORDER(new CreateOrderCommand(), "create_order");
+    CREATE_ORDER(new CreateOrderCommand(), "create_order"),
+    ADD_BALANCE_TO_USER(new AddBalanceCommand(), "add_balance_to_user");
 
     private final Command command;
     private final String commandName;

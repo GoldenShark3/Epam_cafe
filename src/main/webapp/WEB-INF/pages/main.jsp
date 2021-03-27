@@ -22,34 +22,34 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="../../img/main-bg-1.jpg" class="d-block w-100 h-100" alt="main_welcome">
+            <img src="../../img/main_bg_1.jpg" class="d-block w-100 h-100" alt="main_welcome">
             <div class="carousel-caption d-none d-md-block">
                 <div class="d-flex justify-content-center row">
                     <div class="col-4" style="backdrop-filter: blur(2px); border-radius: 15px;">
-                        <h2>First slide label</h2>
-                        <p style="font-size: 16px;">DA-DA-DA</p>
+                        <h2><fmt:message key="title.main"/></h2>
+                        <p style="font-size: 16px;"><fmt:message key="label.main.cafe"/></p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="carousel-item">
-            <img src="../../img/main-bg-2.jpg" class="d-block w-100 h-100" alt="main_burger">
+            <img src="../../img/main_bg_2.jpg" class="d-block w-100 h-100" alt="main_burger">
             <div class="carousel-caption d-none d-md-block">
                 <div class="d-flex justify-content-center row">
                     <div class="col-4" style="backdrop-filter: blur(2px); border-radius: 15px;">
-                        <h2>First slide label</h2>
-                        <p style="font-size: 16px;">DA-DA-DA</p>
+                        <h2><fmt:message key="title.main.products"/></h2>
+                        <p style="font-size: 16px;"><fmt:message key="label.main.products"/></p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="carousel-item">
-            <img src="../../img/main-bg-1.jpg" class="d-block w-100 h-100" alt="main_coffee">
+            <img src="../../img/main_bg_3.jpg" class="d-block w-100 h-100" alt="main_coffee">
             <div class="carousel-caption d-none d-md-block">
                 <div class="d-flex justify-content-center row">
                     <div class="col-4" style="backdrop-filter: blur(2px); border-radius: 15px;">
-                        <h2>First slide label</h2>
-                        <p style="font-size: 16px;">DA-DA-DA</p>
+                        <h2><fmt:message key="title.main.delivery"/></h2>
+                        <p style="font-size: 16px;"><fmt:message key="label.main.delivery"/></p>
                     </div>
                 </div>
             </div>

@@ -80,10 +80,12 @@
                 eMessages.innerText += errorMessages[i] + '\n';
             }
         }
+
+        alert("<fmt:message key="info.successfullyCreateOrder"/>");
+
         let redirectCommand = parse.redirect_command;
         if (redirectCommand != null) {
-            window.location.href = '<c:url value="/cafe"/>' + "?command=" + redirectCommand
-                + '&type_id=' + '${param.type_id}' + '&page=' + '${param.page}'
+            window.location.href = '<c:url value="/cafe"/>' + "?command=" + redirectCommand;
         }
     }
 </script>

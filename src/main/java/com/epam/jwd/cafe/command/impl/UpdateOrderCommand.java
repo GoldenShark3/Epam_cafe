@@ -8,15 +8,20 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.OrderStatus;
 import com.epam.jwd.cafe.service.OrderService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class UpdateOrderCommand implements Command {
+public class UpdateOrderCommand implements Command, AdminCommand {
+    private static final Logger LOGGER = LogManager.getLogger(UpdateOrderCommand.class);
     private static final OrderService ORDER_SERVICE = OrderService.INSTANCE;
 
     @Override
@@ -43,7 +48,7 @@ public class UpdateOrderCommand implements Command {
                 return new ResponseContext(new RestResponseType(), requestMap, new HashMap<>());
             }
         } catch (ServiceException e) {
-            //todo: log
+            LOGGER.error("Failed update order", e);
         }
         return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), requestMap, new HashMap<>());
     }

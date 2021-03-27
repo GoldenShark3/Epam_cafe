@@ -8,6 +8,7 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.UserCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.OrderStatus;
@@ -19,6 +20,8 @@ import com.epam.jwd.cafe.service.OrderService;
 import com.epam.jwd.cafe.service.ProductService;
 import com.epam.jwd.cafe.service.UserService;
 import com.epam.jwd.cafe.util.LocalizationMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,7 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class CreateOrderCommand implements Command {
+public class CreateOrderCommand implements Command, UserCommand {
+    private static final Logger LOGGER = LogManager.getLogger(CreateOrderCommand.class);
     private static final OrderService ORDER_SERVICE = OrderService.INSTANCE;
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;
     private static final UserService USER_SERVICE = UserService.INSTANCE;
@@ -81,7 +85,7 @@ public class CreateOrderCommand implements Command {
                 return new ResponseContext(new RestResponseType(), requestMap, sessionMap);
             }
         } catch (ServiceException e) {
-            //todo: log
+            LOGGER.error("Failed to create order", e);
         }
         return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), requestMap, sessionMap);
     }

@@ -8,6 +8,7 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.UserCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.Handler;
 import com.epam.jwd.cafe.handler.impl.NameHandler;
@@ -15,12 +16,16 @@ import com.epam.jwd.cafe.handler.impl.PhoneNumberHandler;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.model.dto.UserDto;
 import com.epam.jwd.cafe.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class EditProfileCommand implements Command {
+public class EditProfileCommand implements Command, UserCommand {
+    private static final Logger LOGGER = LogManager.getLogger(EditProfileCommand.class);
     private static final UserService USER_SERVICE = UserService.INSTANCE;
     private static final Handler EDIT_HANDLER = new NameHandler(new PhoneNumberHandler());
 
@@ -51,11 +56,11 @@ public class EditProfileCommand implements Command {
 
                     USER_SERVICE.updateUser(user);
 
-                    requestMap.put(RequestConstant.REDIRECT_COMMAND, CommandManager.TO_USER_PROFILE.getCommandName());
+                    requestMap.put(RequestConstant.REDIRECT_COMMAND, CommandManager.TO_PROFILE.getCommandName());
                     return new ResponseContext(new RestResponseType(), requestMap, new HashMap<>());
                 }
             } catch (ServiceException e) {
-                //todo: log
+                LOGGER.error("Failed to edit profile", e);
                 return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE));
             }
         }

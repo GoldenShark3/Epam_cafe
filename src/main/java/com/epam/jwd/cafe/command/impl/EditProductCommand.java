@@ -8,6 +8,7 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.Handler;
 import com.epam.jwd.cafe.handler.impl.DescriptionHandler;
@@ -18,6 +19,8 @@ import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.service.ProductService;
 import com.epam.jwd.cafe.util.LocalizationMessage;
 import com.sun.javafx.fxml.builder.JavaFXFontBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -25,7 +28,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class EditProductCommand implements Command {
+public class EditProductCommand implements Command, AdminCommand {
+    private static final Logger LOGGER = LogManager.getLogger(EditProductCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;
     private static final Handler EDIT_PRODUCT_HANDLER = new PriceHandler(new ProductNameHandler(new DescriptionHandler()));
 
@@ -55,7 +59,7 @@ public class EditProductCommand implements Command {
                 responseContext = new ResponseContext(new RestResponseType(), requestMap, new HashMap<>());
 
             } catch (ServiceException e) {
-                //todo: log
+                LOGGER.error("Failed to edit product", e);
                 responseContext = new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), new HashMap<>(), new HashMap<>());
             }
         } else {

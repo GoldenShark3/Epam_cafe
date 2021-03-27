@@ -9,14 +9,19 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.UserCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.impl.NumberHandler;
 import com.epam.jwd.cafe.service.ProductService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class DeleteProductFromCartCommand implements Command {
+public class DeleteProductFromCartCommand implements Command, UserCommand {
+    private static final Logger LOGGER = LogManager.getLogger(DeleteProductFromCartCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;
 
     @Override
@@ -26,8 +31,8 @@ public class DeleteProductFromCartCommand implements Command {
         Set<String> errorMessage = new NumberHandler(id).handleRequest(request);
 
         if (errorMessage.isEmpty()) {
-            int productId = Integer.parseInt(id);
             try {
+                int productId = Integer.parseInt(id);
                 Map<Integer, Integer> cart = (Map<Integer, Integer>) request.getSessionAttributes().get(RequestConstant.CART);
 
                 if (cart != null && PRODUCT_SERVICE.findProductById(productId).isPresent()) {
@@ -41,7 +46,7 @@ public class DeleteProductFromCartCommand implements Command {
                     return new ResponseContext(new RestResponseType(), requestMap, new HashMap<>());
                 }
             } catch (ServiceException | NumberFormatException e) {
-                //todo: log
+                LOGGER.error("Failed to delete product from cart or incorrect product id", e);
             }
         }
         return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), requestMap, new HashMap<>());

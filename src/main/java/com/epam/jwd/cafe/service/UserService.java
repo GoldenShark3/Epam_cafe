@@ -45,7 +45,7 @@ public class UserService {
                 if (user.getIsBlocked()) {
                     return Optional.of("serverMessage.blockedAccount");
                 }
-                UserDto userDto = new UserDto(user.getId(), user.getRole());
+                UserDto userDto = new UserDto(user.getId(), user.getRole(), user.getIsBlocked());
                 session.put("user", userDto);
                 return Optional.empty();
             }

@@ -8,6 +8,7 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.Handler;
 import com.epam.jwd.cafe.handler.impl.ImgFileHandler;
@@ -15,6 +16,9 @@ import com.epam.jwd.cafe.handler.impl.ProductNameHandler;
 import com.epam.jwd.cafe.model.ProductType;
 import com.epam.jwd.cafe.service.ProductTypeService;
 import com.epam.jwd.cafe.util.LocalizationMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,7 +27,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-public class AddProductTypeCommand implements Command {
+public class AddProductTypeCommand implements Command, AdminCommand {
+    private static final Logger LOGGER = LogManager.getLogger(AddProductTypeCommand.class);
     private static final ProductTypeService PRODUCT_TYPE_SERVICE = ProductTypeService.INSTANCE;
     private static final Handler PRODUCT_TYPE_HANDLER = new ImgFileHandler(new ProductNameHandler());
 
@@ -53,7 +58,7 @@ public class AddProductTypeCommand implements Command {
                 }
                 responseContext = new ResponseContext(new RestResponseType(), requestMap, new HashMap<>());
             } catch (ServiceException | IOException e) {
-                //todo: log
+                LOGGER.error("Failed to add product type", e);
                 responseContext = new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE));
             }
         } else {

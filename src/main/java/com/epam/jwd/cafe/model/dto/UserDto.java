@@ -6,10 +6,12 @@ import java.util.Objects;
 public class UserDto {
     private final int id;
     private final Role role;
+    private final boolean isBlocked;
 
-    public UserDto(int id, Role role) {
+    public UserDto(int id, Role role, boolean isBlocked) {
         this.id = id;
         this.role = role;
+        this.isBlocked = isBlocked;
     }
 
     public int getId() {
@@ -18,6 +20,10 @@ public class UserDto {
 
     public Role getRole() {
         return role;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
     }
 
     @Override

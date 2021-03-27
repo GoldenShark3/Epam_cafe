@@ -93,6 +93,7 @@ public class UserDao extends AbstractDao<User> {
                 .withEmail(resultSet.getString("email"))
                 .withLoyaltyPoints(resultSet.getInt("loyalty_points"))
                 .withPhoneNumber(resultSet.getString("phone_number"))
+                .withIsBlocked(resultSet.getBoolean("is_blocked"))
                 .build();
         return Optional.of(baseUser);
     }

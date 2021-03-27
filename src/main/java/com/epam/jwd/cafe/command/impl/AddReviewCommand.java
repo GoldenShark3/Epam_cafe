@@ -8,6 +8,7 @@ import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.RestResponseType;
 import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.command.marker.UserCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.Handler;
 import com.epam.jwd.cafe.handler.impl.NumberHandler;
@@ -18,12 +19,16 @@ import com.epam.jwd.cafe.model.dto.UserDto;
 import com.epam.jwd.cafe.service.ReviewService;
 import com.epam.jwd.cafe.service.UserService;
 import com.epam.jwd.cafe.util.LocalizationMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class AddReviewCommand implements Command {
+public class AddReviewCommand implements Command, UserCommand {
+    private static final Logger LOGGER = LogManager.getLogger(AddReviewCommand.class);
     private static final ReviewService REVIEW_SERVICE = ReviewService.INSTANCE;
     private static final UserService USER_SERVICE = UserService.INSTANCE;
     private static final Handler REVIEW_HANDLER = new ReviewHandler();
@@ -57,7 +62,7 @@ public class AddReviewCommand implements Command {
                 }
                 return new ResponseContext(new RestResponseType(), requestMap, new HashMap<>());
             } catch (ServiceException e) {
-                //todo: log
+                LOGGER.error("Failed to add review", e);
                 return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), requestMap, new HashMap<>());
             }
         } else {

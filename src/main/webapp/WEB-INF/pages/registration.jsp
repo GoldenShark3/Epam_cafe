@@ -136,6 +136,8 @@
                 }
             }
 
+            alert("<fmt:message key="info.registrationSuccessfully"/>");
+
             let redirectCommand = parse.redirect_command;
             if (redirectCommand != null) {
                 window.location.href = '<c:url value="/cafe"/>' + "?command=" + redirectCommand
