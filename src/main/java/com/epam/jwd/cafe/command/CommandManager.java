@@ -36,6 +36,11 @@ import com.epam.jwd.cafe.command.impl.ToUsersCommand;
 import com.epam.jwd.cafe.command.impl.UpdateOrderCommand;
 import com.epam.jwd.cafe.command.impl.UpdateUserCommand;
 
+/**
+ * The class represent all {@link Command}'s
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public enum CommandManager {
     TO_LOGIN(new ToLoginCommand(), "to_login"),
     TO_REGISTRATION(new ToRegistrationCommand(), "to_registration"),

@@ -26,6 +26,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The class provide CRUD operations for {@link Order}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class OrderDao extends AbstractDao<Order> {
     private final Logger LOGGER = LogManager.getLogger(OrderDao.class);
     public static final OrderDao INSTANCE = new OrderDao(ConnectionPool.getInstance());

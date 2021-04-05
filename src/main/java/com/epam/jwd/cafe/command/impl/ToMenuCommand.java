@@ -16,6 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class provides moving to menu page
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToMenuCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(ToMenuCommand.class);
 

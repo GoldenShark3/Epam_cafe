@@ -3,6 +3,13 @@ package com.epam.jwd.cafe.util;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class is used to implement {@link com.epam.jwd.cafe.tag.PaginationTag}
+ * @param <T> type of pagination objects
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class PaginationContext<T> {
     private static final int PER_PAGE = 5;
     private final List<T> objectList;

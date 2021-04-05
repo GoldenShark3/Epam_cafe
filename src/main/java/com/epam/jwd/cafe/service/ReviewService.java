@@ -8,6 +8,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
 
+/**
+ * The class provides a business logics of {@link Review}.
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ReviewService {
     private final Logger LOGGER = LogManager.getLogger(ProductTypeService.class);
     public static final ReviewService INSTANCE = new ReviewService();
@@ -16,6 +21,12 @@ public class ReviewService {
     private ReviewService(){
     }
 
+    /**
+     * Find all reviews in database
+     *
+     * @return {@link List<Review>}
+     * @throws ServiceException - if database access error
+     */
     public List<Review> findAllReviews() throws ServiceException {
         List<Review> reviews;
         try {
@@ -27,6 +38,12 @@ public class ReviewService {
         return reviews;
     }
 
+    /**
+     * Create a new review.
+     *
+     * @param review - review object to add to the database
+     * @throws ServiceException - if database access error
+     */
     public void createReview(Review review) throws ServiceException {
         try {
             REVIEW_DAO.create(review);

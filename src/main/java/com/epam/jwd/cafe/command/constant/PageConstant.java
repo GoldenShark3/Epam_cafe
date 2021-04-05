@@ -1,5 +1,10 @@
 package com.epam.jwd.cafe.command.constant;
 
+/**
+ * The class represent all paths to jsp files
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class PageConstant {
     public static final String MAIN_PAGE = "/WEB-INF/pages/main.jsp";
     public static final String LOGIN_PAGE = "/WEB-INF/pages/login.jsp";

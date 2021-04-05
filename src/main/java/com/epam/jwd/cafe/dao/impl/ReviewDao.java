@@ -5,6 +5,7 @@ import com.epam.jwd.cafe.dao.field.EntityField;
 import com.epam.jwd.cafe.dao.field.ReviewField;
 import com.epam.jwd.cafe.dao.field.UserField;
 import com.epam.jwd.cafe.exception.DaoException;
+import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.Review;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.pool.ConnectionPool;
@@ -17,6 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The class provide CRUD operations for {@link Review}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ReviewDao extends AbstractDao<Review> {
     public static final ReviewDao INSTANCE = new ReviewDao(ConnectionPool.getInstance());
 

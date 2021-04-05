@@ -5,10 +5,16 @@ import com.epam.jwd.cafe.command.ForwardResponseType;
 import com.epam.jwd.cafe.command.RequestContext;
 import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
+import com.epam.jwd.cafe.model.Product;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The class provides changes {@link com.epam.jwd.cafe.model.User} locale
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ChangeLocaleCommand implements Command {
 
     @Override

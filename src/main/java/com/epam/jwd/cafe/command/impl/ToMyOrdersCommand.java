@@ -18,6 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class provides moving {@link com.epam.jwd.cafe.model.User} to 'my orders' page
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToMyOrdersCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(ToMyOrdersCommand.class);
     private static final OrderService ORDER_SERVICE = OrderService.INSTANCE;

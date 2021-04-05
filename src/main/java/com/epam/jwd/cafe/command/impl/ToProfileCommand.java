@@ -18,6 +18,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The class provides moving {@link User} to profile page
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToProfileCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(ToProfileCommand.class);
 

@@ -31,6 +31,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The class provides register {@link com.epam.jwd.cafe.model.User}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class RegistrationCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(RegistrationCommand.class);
     private static final UserService USER_SERVICE = UserService.INSTANCE;

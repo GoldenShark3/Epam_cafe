@@ -20,6 +20,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The class provides delete product from {@link com.epam.jwd.cafe.model.User} cart
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class DeleteProductFromCartCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(DeleteProductFromCartCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;

@@ -3,6 +3,11 @@ package com.epam.jwd.cafe.command;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The class is wrap all the received data from {@link Command}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ResponseContext {
     private ResponseType responseType;
     private final Map<String, Object> requestAttributes;

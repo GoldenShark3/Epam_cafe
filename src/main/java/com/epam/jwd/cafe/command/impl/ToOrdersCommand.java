@@ -20,6 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class provides moving admin to orders page
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToOrdersCommand implements Command, AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger(ToOrdersCommand.class);
     private static final OrderService ORDER_SERVICE = OrderService.INSTANCE;

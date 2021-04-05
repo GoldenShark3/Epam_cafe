@@ -1,5 +1,12 @@
 package com.epam.jwd.cafe.command.constant;
 
+/**
+ * The class represent all {@link com.epam.jwd.cafe.command.RequestContext}<br>
+ * and {@link com.epam.jwd.cafe.command.ResponseContext}
+ * parameters names
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class RequestConstant {
     public final static String FIRST_NAME = "firstName";
     public final static String LAST_NAME = "lastName";

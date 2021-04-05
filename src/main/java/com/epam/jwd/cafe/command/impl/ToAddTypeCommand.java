@@ -9,6 +9,11 @@ import com.epam.jwd.cafe.command.marker.AdminCommand;
 
 import java.util.HashMap;
 
+/**
+ * The class provides moving admin to page for add new product type
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToAddTypeCommand implements Command, AdminCommand {
 
     @Override

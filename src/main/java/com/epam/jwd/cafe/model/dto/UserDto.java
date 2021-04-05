@@ -3,6 +3,11 @@ package com.epam.jwd.cafe.model.dto;
 import com.epam.jwd.cafe.model.Role;
 import java.util.Objects;
 
+/**
+ * The class representation {@link com.epam.jwd.cafe.model.User} in session
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class UserDto {
     private final int id;
     private final Role role;

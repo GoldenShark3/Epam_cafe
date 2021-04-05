@@ -22,6 +22,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * The class proxies {@link Connection} to wrap close method
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ProxyConnection implements Connection {
     private final Logger LOGGER = LogManager.getLogger(ProxyConnection.class);
     private final Connection connection;

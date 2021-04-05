@@ -16,6 +16,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The class provides moving {@link com.epam.jwd.cafe.model.User} to cart page
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToCartCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(ToCartCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;

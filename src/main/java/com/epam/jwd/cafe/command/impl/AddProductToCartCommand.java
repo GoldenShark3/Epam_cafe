@@ -10,6 +10,7 @@ import com.epam.jwd.cafe.command.constant.RequestConstant;
 import com.epam.jwd.cafe.command.marker.UserCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.impl.NumberHandler;
+import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.service.ProductService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +19,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The class provides for adding {@link Product} to {@link com.epam.jwd.cafe.model.User} cart
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class AddProductToCartCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(AddProductToCartCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;

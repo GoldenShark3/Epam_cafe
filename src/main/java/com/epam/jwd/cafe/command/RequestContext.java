@@ -8,6 +8,11 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The class is wrap all data from {@link HttpServletRequest}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class RequestContext {
     private final Map<String, String> requestParameters;
 

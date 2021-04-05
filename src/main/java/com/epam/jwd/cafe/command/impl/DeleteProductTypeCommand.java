@@ -10,6 +10,7 @@ import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
 import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
+import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.ProductType;
 import com.epam.jwd.cafe.service.ProductTypeService;
 import com.epam.jwd.cafe.util.IOUtil;
@@ -20,6 +21,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The class provides delete {@link ProductType} by admin
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class DeleteProductTypeCommand implements Command, AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger(DeleteProductTypeCommand.class);
     private static final ProductTypeService PRODUCT_TYPE_SERVICE = ProductTypeService.INSTANCE;

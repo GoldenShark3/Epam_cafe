@@ -16,8 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/cafe", "*.do"})
+/**
+ * The class provide entry point for all requests
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 
+@WebServlet(urlPatterns = {"/cafe", "*.do"})
 @MultipartConfig(location = "C:\\Users\\Aleksey\\Desktop\\EPAM\\EpamCafe\\out\\artifacts\\epam_cafe_war_exploded\\data",
         maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 2)
 public class Controller extends HttpServlet {

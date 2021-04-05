@@ -9,6 +9,7 @@ import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.OrderStatus;
 import com.epam.jwd.cafe.model.PaymentMethod;
+import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.tag.PaginationTag;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
@@ -19,6 +20,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The class provides a business logics of {@link Order}.
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class OrderService {
     private final Logger LOGGER = LogManager.getLogger(OrderService.class);
     public static final OrderService INSTANCE = new OrderService();
@@ -27,6 +33,12 @@ public class OrderService {
     private OrderService() {
     }
 
+    /**
+     * Find all orders in the database.
+     *
+     * @return {@link List} of all orders
+     * @throws ServiceException if the database access error
+     */
     public List<Order> findAllOrders() throws ServiceException {
         try {
             return ORDER_DAO.findAll();
@@ -36,6 +48,13 @@ public class OrderService {
         }
     }
 
+    /**
+     * Create new order
+     *
+     * @param order {@link Order} order object to add to the database
+     * @return {@link Optional<String>} - server message, if user is blocked<br> or the user does not have enough money
+     * @throws ServiceException if the database access error
+     */
     public Optional<String> createOrder(Order order) throws ServiceException {
         int loyaltyPointsPerDollar;
         User orderUser = order.getUser();
@@ -68,6 +87,13 @@ public class OrderService {
         return Optional.empty();
     }
 
+    /**
+     * Find {@link Order} in the database by id
+     *
+     * @param orderId id of the order to be found
+     * @return {@link Optional<Order>}
+     * @throws ServiceException if the database access error
+     */
     public Optional<Order> findOrderById(int orderId) throws ServiceException {
         List<Order> orders;
         try {
@@ -79,6 +105,13 @@ public class OrderService {
         return ((orders.size() > 0) ? Optional.of(orders.get(0)) : Optional.empty());
     }
 
+    /**
+     * Find all orders by user id
+     *
+     * @param userId id of {@link User}
+     * @return {@link List} of user orders
+     * @throws ServiceException if the database access error
+     */
     public List<Order> findAllOrdersByUserId(int userId) throws ServiceException {
         try {
             return ORDER_DAO.findByField(String.valueOf(userId), OrderField.USER_ID);
@@ -88,6 +121,12 @@ public class OrderService {
         }
     }
 
+    /**
+     * Update order
+     *
+     * @param order updated order
+     * @throws ServiceException if the database access error
+     */
     public void updateOrder(Order order) throws ServiceException {
         try {
             ORDER_DAO.update(order);

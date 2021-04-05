@@ -5,6 +5,7 @@ import com.epam.jwd.cafe.dao.field.EntityField;
 import com.epam.jwd.cafe.dao.field.ProductField;
 import com.epam.jwd.cafe.dao.field.ProductTypeField;
 import com.epam.jwd.cafe.exception.DaoException;
+import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.ProductType;
 import com.epam.jwd.cafe.pool.ConnectionPool;
@@ -21,6 +22,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The class provide CRUD operations for {@link Product}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ProductDao extends AbstractDao<Product> {
     private final Logger LOGGER = LogManager.getLogger(ProductDao.class);
     public static final ProductDao INSTANCE = new ProductDao(ConnectionPool.getInstance());

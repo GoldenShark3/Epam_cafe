@@ -28,6 +28,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The class provides editing {@link Product} by admin
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class EditProductCommand implements Command, AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger(EditProductCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;

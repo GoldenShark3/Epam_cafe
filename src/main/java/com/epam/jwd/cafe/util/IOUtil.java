@@ -5,6 +5,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
+/**
+ * The class provide deleted all uploaded files
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class IOUtil {
     private static final Logger LOGGER = LogManager.getLogger(IOUtil.class);
     private static final String DATA_DIR = "C:\\Users\\Aleksey\\Desktop\\EPAM\\EpamCafe\\src\\main\\webapp\\data\\";

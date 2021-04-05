@@ -18,6 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class provides moving an admin to page with all users data
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToUsersCommand implements Command, AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger(ToUsersCommand.class);
     private static final UserService USER_SERVICE = UserService.INSTANCE;

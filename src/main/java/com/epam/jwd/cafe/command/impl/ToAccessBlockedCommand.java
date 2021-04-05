@@ -5,9 +5,13 @@ import com.epam.jwd.cafe.command.ForwardResponseType;
 import com.epam.jwd.cafe.command.RequestContext;
 import com.epam.jwd.cafe.command.ResponseContext;
 import com.epam.jwd.cafe.command.constant.PageConstant;
-
 import java.util.HashMap;
 
+/**
+ * The class provides moving user to access blocked page when he has not enough access
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToAccessBlockedCommand implements Command {
 
     @Override

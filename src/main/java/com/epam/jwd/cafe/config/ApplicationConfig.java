@@ -3,6 +3,11 @@ package com.epam.jwd.cafe.config;
 import com.epam.jwd.cafe.util.PropertyReaderUtil;
 import java.util.Properties;
 
+/**
+ * The class represented all data from app.properties file
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ApplicationConfig {
     private static ApplicationConfig instance;
 

@@ -20,6 +20,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The class provides delete {@link Product} by admin
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class DeleteProductCommand implements Command, AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger(DeleteProductCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;

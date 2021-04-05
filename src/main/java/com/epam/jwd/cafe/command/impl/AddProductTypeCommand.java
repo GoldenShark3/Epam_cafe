@@ -13,6 +13,7 @@ import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.Handler;
 import com.epam.jwd.cafe.handler.impl.ImgFileHandler;
 import com.epam.jwd.cafe.handler.impl.ProductNameHandler;
+import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.ProductType;
 import com.epam.jwd.cafe.service.ProductTypeService;
 import com.epam.jwd.cafe.util.LocalizationMessage;
@@ -27,6 +28,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * The class provides for adding new {@link ProductType} by admin
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class AddProductTypeCommand implements Command, AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger(AddProductTypeCommand.class);
     private static final ProductTypeService PRODUCT_TYPE_SERVICE = ProductTypeService.INSTANCE;

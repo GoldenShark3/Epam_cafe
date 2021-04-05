@@ -2,6 +2,11 @@ package com.epam.jwd.cafe.model;
 
 import com.epam.jwd.cafe.exception.EntityNotFoundException;
 
+/**
+ * The class representation of {@link Order} payment method
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public enum PaymentMethod {
     BALANCE,
     CARD,

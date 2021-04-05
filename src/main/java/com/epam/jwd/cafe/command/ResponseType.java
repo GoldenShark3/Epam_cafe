@@ -1,5 +1,10 @@
 package com.epam.jwd.cafe.command;
 
+/**
+ * Class represent types of {@link ResponseContext}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public abstract class ResponseType {
     public enum Type{
         FORWARD,

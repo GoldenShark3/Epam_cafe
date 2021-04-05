@@ -9,6 +9,12 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * The class defending from js injection
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
+
 @WebFilter(filterName = "XssAttackFilter")
 public class XssAttackFilter implements Filter {
 

@@ -11,6 +11,7 @@ import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.Handler;
 import com.epam.jwd.cafe.handler.impl.NumberHandler;
+import com.epam.jwd.cafe.model.OrderStatus;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.service.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +22,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The class provides updating {@link User} data by admin
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class UpdateUserCommand implements Command, AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger(UpdateUserCommand.class);
     private static final UserService USER_SERVICE = UserService.INSTANCE;

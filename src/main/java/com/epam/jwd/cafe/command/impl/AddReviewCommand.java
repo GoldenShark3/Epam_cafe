@@ -13,6 +13,7 @@ import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.handler.Handler;
 import com.epam.jwd.cafe.handler.impl.NumberHandler;
 import com.epam.jwd.cafe.handler.impl.ReviewHandler;
+import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.Review;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.model.dto.UserDto;
@@ -27,6 +28,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The class provides for adding new {@link Review}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class AddReviewCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(AddReviewCommand.class);
     private static final ReviewService REVIEW_SERVICE = ReviewService.INSTANCE;

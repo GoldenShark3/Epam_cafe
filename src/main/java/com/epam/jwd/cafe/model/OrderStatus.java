@@ -2,6 +2,11 @@ package com.epam.jwd.cafe.model;
 
 import com.epam.jwd.cafe.exception.EntityNotFoundException;
 
+/**
+ * The class representation {@link Order} status
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public enum OrderStatus {
     ACTIVE,
     CANCELLED,

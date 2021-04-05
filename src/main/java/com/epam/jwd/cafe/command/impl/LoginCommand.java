@@ -17,12 +17,16 @@ import com.epam.jwd.cafe.util.LocalizationMessage;
 import com.epam.jwd.cafe.util.PasswordEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The class provides authorized {@link com.epam.jwd.cafe.model.User}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class LoginCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
     private static final UserService USER_SERVICE = UserService.INSTANCE;

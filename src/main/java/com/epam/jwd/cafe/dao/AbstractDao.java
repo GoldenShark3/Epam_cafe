@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Class provide common CRUD operations for entities
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     protected final ConnectionPool connectionPool;
 

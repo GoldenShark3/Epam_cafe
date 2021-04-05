@@ -30,6 +30,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The class provides create new {@link Order}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class CreateOrderCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(CreateOrderCommand.class);
     private static final OrderService ORDER_SERVICE = OrderService.INSTANCE;

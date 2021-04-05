@@ -8,6 +8,12 @@ import com.epam.jwd.cafe.command.constant.PageConstant;
 
 import java.util.HashMap;
 
+/**
+ * The class provides moving to page for authorized
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToLoginCommand implements Command {
 
     @Override

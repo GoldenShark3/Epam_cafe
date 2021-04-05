@@ -20,6 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class provides moving to page with reviews
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToReviewCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(ToReviewCommand.class);
     private static final ReviewService REVIEW_SERVICE = ReviewService.INSTANCE;

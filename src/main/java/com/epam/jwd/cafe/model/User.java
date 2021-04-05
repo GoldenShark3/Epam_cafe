@@ -3,6 +3,11 @@ package com.epam.jwd.cafe.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * The class representation of user
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class User extends BaseEntity{
     private final int id;
     private final Role role;

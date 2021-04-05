@@ -2,6 +2,11 @@ package com.epam.jwd.cafe.model;
 
 import java.util.Objects;
 
+/**
+ * The class representation of review
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class Review extends BaseEntity {
     private final Integer id;
     private final String feedback;

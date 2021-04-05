@@ -5,6 +5,11 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * The class representation of order
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class Order extends BaseEntity{
     private final int id;
     private final User user;

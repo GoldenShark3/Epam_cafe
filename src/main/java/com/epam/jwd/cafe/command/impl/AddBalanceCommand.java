@@ -15,12 +15,16 @@ import com.epam.jwd.cafe.model.dto.UserDto;
 import com.epam.jwd.cafe.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The class provides for adding money to the {@link User} account
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class AddBalanceCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(AddBalanceCommand.class);
     private static final Integer ADD_DOLLAR_TO_USER = 50;

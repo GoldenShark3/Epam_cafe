@@ -3,6 +3,11 @@ package com.epam.jwd.cafe.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * The class representation of product
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class Product extends BaseEntity{
     private final Integer id;
     private final String name;

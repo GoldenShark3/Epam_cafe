@@ -17,6 +17,11 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The class provides moving {@link com.epam.jwd.cafe.model.User} to page for create order
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToCreateOrderCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(ToCreateOrderCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;

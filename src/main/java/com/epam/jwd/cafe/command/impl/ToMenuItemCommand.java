@@ -20,6 +20,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The class provides moving to menu item page
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class ToMenuItemCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(ToMenuItemCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;

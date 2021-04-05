@@ -17,6 +17,7 @@ import com.epam.jwd.cafe.handler.impl.PriceHandler;
 import com.epam.jwd.cafe.handler.impl.ProductNameHandler;
 import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.ProductType;
+import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.service.ProductService;
 import com.epam.jwd.cafe.service.ProductTypeService;
 import com.epam.jwd.cafe.util.LocalizationMessage;
@@ -33,6 +34,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * The class provides for adding new {@link Product} by admin
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class AddProductCommand implements Command, AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger(AddProductCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;

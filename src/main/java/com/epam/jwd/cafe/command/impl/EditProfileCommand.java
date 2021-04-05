@@ -24,6 +24,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The class provides editing {@link User} profile
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class EditProfileCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(EditProfileCommand.class);
     private static final UserService USER_SERVICE = UserService.INSTANCE;

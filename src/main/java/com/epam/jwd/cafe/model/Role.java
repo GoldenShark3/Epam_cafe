@@ -1,7 +1,10 @@
 package com.epam.jwd.cafe.model;
 
-import com.epam.jwd.cafe.exception.EntityNotFoundException;
-
+/**
+ * The class representation of {@link User} role
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public enum Role {
     ADMIN("ADMIN"),
     USER("USER");
@@ -14,15 +17,5 @@ public enum Role {
 
     public String getName() {
         return name;
-    }
-
-    public static Role resolveRoleById(int id) throws EntityNotFoundException {
-        Role role;
-        try{
-            role = Role.values()[id - 1];
-        }  catch(ArrayIndexOutOfBoundsException e) {
-            throw new EntityNotFoundException("Role with id: " + id + " - not found");
-        }
-        return role;
     }
 }

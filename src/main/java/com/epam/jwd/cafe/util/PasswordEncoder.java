@@ -2,6 +2,11 @@ package com.epam.jwd.cafe.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+/**
+ * The class provide encrypt user password
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class PasswordEncoder {
 
     private PasswordEncoder() {

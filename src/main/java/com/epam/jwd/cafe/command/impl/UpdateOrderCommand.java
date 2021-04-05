@@ -20,6 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The class provides updating {@link OrderStatus} by admin
+ *
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class UpdateOrderCommand implements Command, AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger(UpdateOrderCommand.class);
     private static final OrderService ORDER_SERVICE = OrderService.INSTANCE;

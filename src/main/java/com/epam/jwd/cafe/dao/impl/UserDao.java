@@ -4,6 +4,7 @@ import com.epam.jwd.cafe.dao.AbstractDao;
 import com.epam.jwd.cafe.dao.field.EntityField;
 import com.epam.jwd.cafe.dao.field.UserField;
 import com.epam.jwd.cafe.exception.DaoException;
+import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.Role;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.pool.ConnectionPool;
@@ -16,6 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The class provide CRUD operations for {@link User}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class UserDao extends AbstractDao<User> {
     public static UserDao INSTANCE = new UserDao(ConnectionPool.getInstance());
 

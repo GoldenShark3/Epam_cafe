@@ -11,6 +11,11 @@ import com.epam.jwd.cafe.command.marker.UserCommand;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The class provides log out {@link com.epam.jwd.cafe.model.User} and removes him from {@link javax.servlet.http.HttpSession}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
 public class LogoutCommand implements Command, UserCommand {
 
     @Override

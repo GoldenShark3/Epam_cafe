@@ -12,6 +12,12 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
+/**
+ * The class provide changes encoding of {@link com.epam.jwd.cafe.command.RequestContext}
+ * @author Aleksey Vyshamirski
+ * @version 1.0.0
+ */
+
 @WebFilter(filterName = "Encoding", urlPatterns = {"/*"}, initParams = {
         @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")
 })
