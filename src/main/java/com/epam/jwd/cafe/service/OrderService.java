@@ -2,20 +2,15 @@ package com.epam.jwd.cafe.service;
 
 import com.epam.jwd.cafe.config.ApplicationConfig;
 import com.epam.jwd.cafe.dao.field.OrderField;
-import com.epam.jwd.cafe.dao.field.UserField;
 import com.epam.jwd.cafe.dao.impl.OrderDao;
 import com.epam.jwd.cafe.exception.DaoException;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.OrderStatus;
 import com.epam.jwd.cafe.model.PaymentMethod;
-import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.User;
-import com.epam.jwd.cafe.tag.PaginationTag;
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;

@@ -20,6 +20,7 @@ public class RequestConstant {
     public final static String COMMAND = "command";
     public final static String LOCALE = "locale";
     public final static String CURRENT_PAGE = "page";
+    public final static String CURRENT_URL = "currUrl";
     public final static String ERROR_MESSAGE = "error_message";
     public final static String USER = "user";
     public final static String PAGINATION_CONTEXT = "pagination_context";

@@ -78,8 +78,7 @@
 
                 <form class="mb-0" style="margin-left: 20px" action="<c:url value="/cafe"/>" method="post">
                     <input type="hidden" name="command" value="locale_switch">
-                    <input type="hidden" name="page" value="${ requestScope.page }">
-
+                    <input type="hidden" name="currUrl" id="currUrl" value="">
                     <select class="form-select" name="locale" onchange="submit()">
                         <option value="en_US" <c:if test="${locale eq 'en_US'}">selected</c:if>>English</option>
                         <option value="ru_RU" <c:if test="${locale eq 'ru_RU'}">selected</c:if>>Русский</option>

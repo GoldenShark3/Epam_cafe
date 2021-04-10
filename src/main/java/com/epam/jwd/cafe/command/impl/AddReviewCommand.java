@@ -43,7 +43,7 @@ public class AddReviewCommand implements Command, UserCommand {
     public ResponseContext execute(RequestContext request) {
         Map<String, Object> requestMap = new HashMap<>();
         String rate = request.getRequestParameters().get(RequestConstant.RATE);
-        Set<String> errorMessages = new NumberHandler(REVIEW_HANDLER, rate).handleRequest(request);
+        Set<String> errorMessages = REVIEW_HANDLER.handleRequest(request);
 
         if (errorMessages.isEmpty()) {
             String feedback = request.getRequestParameters().get(RequestConstant.REVIEW);

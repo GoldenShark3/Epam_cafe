@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PriceHandler extends AbstractHandler {
-    private static final String PRICE_REGEX = "^([0-9]{1,3}\\.[0-9]{1,2}|[0-9]{1,2})$";
+    private static final String PRICE_REGEX = "^([0-9]{1,3}\\.[0-9]{1,2})$";
 
 
     public PriceHandler(Handler nextHandler) {
@@ -25,7 +25,7 @@ public class PriceHandler extends AbstractHandler {
         Set<String> error_messages = new HashSet<>();
         String price = requestContext.getRequestParameters().get(RequestConstant.PRODUCT_PRICE);
 
-        if (StringUtils.isNullOrEmpty(price) || !price.matches(price)) {
+        if (StringUtils.isNullOrEmpty(price) || !price.matches(PRICE_REGEX)) {
             error_messages.add(LocalizationMessage.localize(requestContext.getLocale(), "serverMessage.price"));
         }
 

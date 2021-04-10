@@ -15,13 +15,9 @@ import java.util.Map;
  */
 public class RequestContext {
     private final Map<String, String> requestParameters;
-
     private final Map<String, Object> requestAttributes;
-
     private final Map<String, Object> sessionAttributes;
-
     private final Map<String, Part> requestParts;
-
     private final String locale;
 
     public RequestContext(HttpServletRequest request) throws IOException, ServletException {
@@ -30,6 +26,14 @@ public class RequestContext {
         sessionAttributes = retrieveSessionAttributes(request);
         requestParts = retrieveRequestParts(request);
         locale = retrieveLocale(request);
+    }
+
+    public RequestContext(Map<String, String> requestParameters, String locale) {
+        this.requestParameters = requestParameters;
+        this.locale = locale;
+        requestAttributes = null;
+        sessionAttributes = null;
+        requestParts = null;
     }
 
     public Map<String, String> getRequestParameters() {

@@ -1,13 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="app_tag" uri="/WEB-INF/taglib/pagination.tld" %>
-
-<c:set var="page" value="/WEV-INF/pages/secured/users.jsp"/>
+<!DOCTYPE html>
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
-<fmt:setBundle basename="content"/>
 <fmt:setLocale value="${locale}" scope="session"/>
-
+<fmt:setBundle basename="content"/>
 <html>
 <head>
     <title><fmt:message key="title.orders"/></title>
@@ -29,6 +27,7 @@
             <th scope="col"><fmt:message key="label.name"/></th>
             <th scope="col"><fmt:message key="label.phoneNumber"/></th>
             <th scope="col"><fmt:message key="label.address"/></th>
+            <th scope="col"><fmt:message key="label.orderProducts"/></th>
             <th scope="col"><fmt:message key="label.cost"/></th>
             <th scope="col"><fmt:message key="label.status"/></th>
             <th scope="col"></th>
@@ -48,6 +47,17 @@
                 </td>
                 <td>
                     <div class="mt-1">${order.deliveryAddress}</div>
+                </td>
+                <td>
+                    <c:forEach items="${order.products.entrySet()}" var="product">
+                        <div class="mt-1">
+                            <p style="width:50%; float: left">${product.getKey().name}</p>
+                            <p class="text-end" style="width:50%; float: right"> X${product.getValue()}</p>
+                        </div>
+                    </c:forEach>
+                    <c:if test="${empty order.products.entrySet()}">
+                        <p class="text-center"><fmt:message key="label.deleteProduct"/></p>
+                    </c:if>
                 </td>
                 <td>
                     <div class="mt-1">${order.cost}$</div>

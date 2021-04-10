@@ -1,10 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<!DOCTYPE html>
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
-<fmt:setBundle basename="content"/>
 <fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="content"/>
 
 <html>
 <head>
@@ -22,7 +22,7 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="../../img/main_bg_1.jpg" class="d-block w-100 h-100" alt="main_welcome">
+            <img src="../../img/main_bg_1.png" style="height: 650px" class="d-block w-100" alt="main_welcome">
             <div class="carousel-caption d-none d-md-block">
                 <div class="d-flex justify-content-center row">
                     <div class="col-4" style="backdrop-filter: blur(2px); border-radius: 15px;">
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="carousel-item">
-            <img src="../../img/main_bg_2.jpg" class="d-block w-100 h-100" alt="main_burger">
+            <img src="../../img/main_bg_2.png" style="height: 650px" class="d-block w-100" alt="main_burger">
             <div class="carousel-caption d-none d-md-block">
                 <div class="d-flex justify-content-center row">
                     <div class="col-4" style="backdrop-filter: blur(2px); border-radius: 15px;">
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="carousel-item">
-            <img src="../../img/main_bg_3.jpg" class="d-block w-100 h-100" alt="main_coffee">
+            <img src="../../img/main_bg_3.png" style="height: 650px" class="d-block w-100" alt="main_coffee">
             <div class="carousel-caption d-none d-md-block">
                 <div class="d-flex justify-content-center row">
                     <div class="col-4" style="backdrop-filter: blur(2px); border-radius: 15px;">

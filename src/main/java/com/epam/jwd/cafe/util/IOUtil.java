@@ -13,7 +13,7 @@ import java.io.File;
  */
 public class IOUtil {
     private static final Logger LOGGER = LogManager.getLogger(IOUtil.class);
-    private static final String DATA_DIR = "C:\\Users\\Aleksey\\Desktop\\EPAM\\EpamCafe\\src\\main\\webapp\\data\\";
+    private static final String DATA_DIR = "C:\\Users\\Aleksey\\Desktop\\EPAM\\EpamCafe\\out\\artifacts\\epam_cafe_war_exploded\\data\\";
 
     private IOUtil() {
     }

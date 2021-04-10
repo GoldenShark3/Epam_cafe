@@ -1,11 +1,10 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<!DOCTYPE html>
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
 <fmt:setLocale value="${locale}" scope="session"/>
 <fmt:setBundle basename="content"/>
-
 <html>
 <head>
     <title><fmt:message key="title.profile"/></title>
@@ -21,7 +20,7 @@
 <div class="page-content page-container mx-auto" id="page-content">
     <div class="padding">
         <div class="row container d-flex justify-content-center">
-            <div class="col-xl-6 col-md-12">
+            <div class="col-xl-7 col-md-12">
                 <div class="card user-card-full">
                     <div class="row">
                         <div class="col-sm-4 bg-c-lite-green user-profile">

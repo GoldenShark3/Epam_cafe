@@ -9,8 +9,10 @@ import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.ProductType;
 import com.epam.jwd.cafe.pool.ConnectionPool;
+import com.epam.jwd.cafe.service.ProductService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

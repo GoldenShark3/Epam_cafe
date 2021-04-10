@@ -61,7 +61,7 @@ public class ConnectionQueue {
     public void put(Connection connection) throws InterruptedException {
         queueLock.lock();
         try {
-            while (TAKEN_CONNECTIONS.size() == 0) {
+            while (FREE_CONNECTIONS.size() == numOfFreeConnections) {
                 takenConnectionsIsEmpty.await();
             }
             FREE_CONNECTIONS.add(connection);
@@ -111,11 +111,13 @@ public class ConnectionQueue {
         try {
             for (Connection connection : FREE_CONNECTIONS) {
                 ((ProxyConnection) connection).closeConnection();
+                FREE_CONNECTIONS.remove();
             }
 
             for (Connection connection : TAKEN_CONNECTIONS) {
                 connection.commit();
                 ((ProxyConnection) connection).closeConnection();
+                TAKEN_CONNECTIONS.remove();
             }
 
         } catch (SQLException e) {

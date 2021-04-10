@@ -8,6 +8,7 @@ import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.model.ProductType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

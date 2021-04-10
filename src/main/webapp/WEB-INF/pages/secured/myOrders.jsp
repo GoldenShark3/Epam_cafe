@@ -1,11 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="app_tag" uri="/WEB-INF/taglib/pagination.tld" %>
-
+<!DOCTYPE html>
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
-<fmt:setBundle basename="content"/>
 <fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="content"/>
 
 <c:set var="index" value="0"/>
 <html>
@@ -47,11 +47,17 @@
                 </td>
                 <td>
                     <c:forEach items="${order.products.entrySet()}" var="product">
-                        <div class="mt-1">
-                            <p style="width:50%; float: left; font-size: 20px;">${product.getKey().name}</p>
-                            <p class="text-end" style="width:50%; float: right; font-size: 20px;"> X${product.getValue()}</p>
-                        </div>
+                        <c:if test="${product.getKey().name != null}">
+                            <div class="mt-1">
+                                <p style="width:50%; float: left; font-size: 20px;">${product.getKey().name}</p>
+                                <p class="text-end" style="width:50%; float: right; font-size: 20px;">
+                                    X${product.getValue()}</p>
+                            </div>
+                        </c:if>
                     </c:forEach>
+                    <c:if test="${empty order.products.entrySet()}">
+                        <p class="text-center"><fmt:message key="label.deleteProduct"/></p>
+                    </c:if>
                 </td>
                 <td>
                     <div class="mt-1">
