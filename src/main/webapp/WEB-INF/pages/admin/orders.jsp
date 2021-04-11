@@ -56,7 +56,7 @@
                         </div>
                     </c:forEach>
                     <c:if test="${empty order.products.entrySet()}">
-                        <p class="text-center"><fmt:message key="label.deleteProduct"/></p>
+                        <p class="text-center text-danger"><fmt:message key="label.deleteProduct"/></p>
                     </c:if>
                 </td>
                 <td>

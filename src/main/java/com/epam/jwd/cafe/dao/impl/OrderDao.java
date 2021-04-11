@@ -49,6 +49,8 @@ public class OrderDao extends AbstractDao<Order> {
     private static final String SQL_CREATE_ORDER_PRODUCTS = "INSERT INTO order_product(order_id, product_id," +
             " amount) VALUES (?, ?, ?)";
 
+    private static final String SQL_DELETE_ORDER_PRODUCTS = "DELETE FROM order_product where product_id = ?";
+
 
     private OrderDao(ConnectionPool connectionPool) {
         super(connectionPool);
@@ -168,6 +170,17 @@ public class OrderDao extends AbstractDao<Order> {
             throw new DaoException("Failed to find order by " + nameOfField.toString().toLowerCase());
         }
         return orderList;
+    }
+
+    public void deleteOrderProductByProductId(int productId) throws DaoException {
+        try (Connection connection = connectionPool.retrieveConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ORDER_PRODUCTS)) {
+                preparedStatement.setInt(1, productId);
+                preparedStatement.execute();
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Failed to delete order product with product id = " + productId);
+        }
     }
 
     private void prepareAllOrderStatements(PreparedStatement preparedStatement, Order order) throws SQLException {

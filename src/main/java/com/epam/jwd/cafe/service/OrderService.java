@@ -132,6 +132,15 @@ public class OrderService {
         }
     }
 
+    public void deleteProductFromOrders(int productId) throws ServiceException {
+        try {
+            ORDER_DAO.deleteOrderProductByProductId(productId);
+        } catch (DaoException e) {
+            LOGGER.error("Failed to delete product from orders");
+            throw new ServiceException(e);
+        }
+    }
+
     private void updateUserBalanceAndLoyaltyPoints(Order order) throws ServiceException {
         User.Builder userBuilder = receiveUserBuilder(order.getUser());
         BigDecimal orderCost = order.getCost();

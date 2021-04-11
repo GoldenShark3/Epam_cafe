@@ -11,6 +11,7 @@ import com.epam.jwd.cafe.command.constant.RequestConstant;
 import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.Product;
+import com.epam.jwd.cafe.service.OrderService;
 import com.epam.jwd.cafe.service.ProductService;
 import com.epam.jwd.cafe.util.IOUtil;
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +29,7 @@ import java.util.Optional;
 public class DeleteProductCommand implements Command, AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger(DeleteProductCommand.class);
     private static final ProductService PRODUCT_SERVICE = ProductService.INSTANCE;
+    private static final OrderService ORDER_SERVICE = OrderService.INSTANCE;
 
     @Override
     public ResponseContext execute(RequestContext request) {
@@ -36,6 +38,7 @@ public class DeleteProductCommand implements Command, AdminCommand {
             Optional<Product> productOptional = PRODUCT_SERVICE.findProductById(productId);
 
             if (productOptional.isPresent()) {
+                ORDER_SERVICE.deleteProductFromOrders(productId);
                 Product product = productOptional.get();
                 PRODUCT_SERVICE.deleteProductById(product.getId());
                 IOUtil.deleteData(product.getImgFileName());
