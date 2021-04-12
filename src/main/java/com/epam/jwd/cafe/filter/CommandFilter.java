@@ -31,12 +31,12 @@ import java.io.IOException;
 @WebFilter(filterName = "CommandFilter",
         initParams = {@WebInitParam(name = "command", value = "to_access_blocked")})
 public class CommandFilter implements Filter {
-    private static final Logger LOGGER = LogManager.getLogger(CommandFilter.class);
 
+    private static final Logger LOGGER = LogManager.getLogger(CommandFilter.class);
     private String accessBlockedCommand;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         accessBlockedCommand = filterConfig.getServletContext().getContextPath()
                 + filterConfig.getInitParameter(RequestConstant.COMMAND);
     }
@@ -51,7 +51,7 @@ public class CommandFilter implements Filter {
         if (isUserHasAccess(request, user)) {
             filterChain.doFilter(request, response);
         } else {
-            LOGGER.warn("access blocked to user");
+            LOGGER.warn("Access blocked to user");
             response.sendRedirect(request.getServletPath() + "?command=" + accessBlockedCommand);
         }
     }

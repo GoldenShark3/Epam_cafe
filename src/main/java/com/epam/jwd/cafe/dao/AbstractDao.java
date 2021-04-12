@@ -44,7 +44,7 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     @Override
     public void create(final T entity) throws DaoException {
         try (Connection connection = connectionPool.retrieveConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(getCreateSql(), Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(getCreateSql())) {
                 prepareCreateStatement(preparedStatement, entity);
                 preparedStatement.execute();
             }
@@ -69,8 +69,7 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     @Override
     public void deleteById(int id) throws DaoException {
         try (Connection connection = connectionPool.retrieveConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    getDeleteSql())) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(getDeleteSql())) {
                 preparedStatement.setInt(1, id);
                 preparedStatement.execute();
             }
@@ -95,5 +94,4 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
         }
         return entitiesList;
     }
-
 }

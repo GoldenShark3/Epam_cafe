@@ -8,6 +8,7 @@ import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
 import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.DaoException;
+import com.epam.jwd.cafe.exception.ServiceException;
 import com.epam.jwd.cafe.model.User;
 import com.epam.jwd.cafe.service.UserService;
 import com.epam.jwd.cafe.util.PaginationContext;
@@ -44,7 +45,7 @@ public class ToUsersCommand implements Command, AdminCommand {
                 responseContext = new ResponseContext(
                         new ForwardResponseType(PageConstant.USERS_PAGE), new HashMap<>(), new HashMap<>());
             }
-        } catch (DaoException e) {
+        } catch (ServiceException e) {
             LOGGER.error("Failed move to users", e);
             responseContext = new ResponseContext(
                     new ForwardResponseType(PageConstant.ERROR_PAGE), new HashMap<>(), new HashMap<>());

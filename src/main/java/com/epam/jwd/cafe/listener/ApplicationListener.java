@@ -3,7 +3,6 @@ package com.epam.jwd.cafe.listener;
 import com.epam.jwd.cafe.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -26,7 +25,7 @@ public class ApplicationListener implements ServletContextListener {
         try {
             connectionPool.initConnectionPool();
         } catch (ClassNotFoundException e) {
-            LOGGER.error("failed to init connection pool", e);
+            LOGGER.error("Failed to init connection pool", e);
         }
 
     }

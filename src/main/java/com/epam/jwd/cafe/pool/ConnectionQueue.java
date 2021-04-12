@@ -21,20 +21,20 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ConnectionQueue {
     private final Logger LOGGER = LogManager.getLogger(ConnectionQueue.class);
+    private static final AtomicBoolean IS_INSTANCE_CREATED = new AtomicBoolean(false);
     public static ConnectionQueue instance;
     private final Queue<Connection> FREE_CONNECTIONS;
     private final Queue<Connection> TAKEN_CONNECTIONS;
-    private static final AtomicBoolean IS_INSTANCE_CREATED = new AtomicBoolean(false);
     private static final Lock INSTANCE_LOCK = new ReentrantLock();
     private final Lock queueLock = new ReentrantLock();
     private final Condition takenConnectionsIsEmpty = queueLock.newCondition();
     private final Condition freeConnectionsIsEmpty = queueLock.newCondition();
-    private final int numOfFreeConnections;
+    private final int numOfConnections;
 
     private ConnectionQueue(int initPoolSize) {
         FREE_CONNECTIONS = new ArrayDeque<>(initPoolSize);
         TAKEN_CONNECTIONS = new ArrayDeque<>(initPoolSize);
-        numOfFreeConnections = initPoolSize;
+        numOfConnections = initPoolSize;
     }
 
     public static ConnectionQueue getInstance(int initPoolSize) {
@@ -61,7 +61,7 @@ public class ConnectionQueue {
     public void put(Connection connection) throws InterruptedException {
         queueLock.lock();
         try {
-            while (FREE_CONNECTIONS.size() == numOfFreeConnections) {
+            while (FREE_CONNECTIONS.size() == numOfConnections) {
                 takenConnectionsIsEmpty.await();
             }
             FREE_CONNECTIONS.add(connection);
@@ -80,7 +80,7 @@ public class ConnectionQueue {
     public Connection take() throws InterruptedException {
         queueLock.lock();
         try {
-            while (TAKEN_CONNECTIONS.size() == numOfFreeConnections) {
+            while (TAKEN_CONNECTIONS.size() == numOfConnections) {
                 freeConnectionsIsEmpty.await();
             }
             ProxyConnection connection = (ProxyConnection) FREE_CONNECTIONS.poll();
@@ -130,5 +130,4 @@ public class ConnectionQueue {
             }
         }
     }
-
 }

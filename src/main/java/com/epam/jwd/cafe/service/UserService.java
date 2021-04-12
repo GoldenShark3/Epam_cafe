@@ -94,8 +94,15 @@ public class UserService {
      * @return {@link List} of users
      * @throws DaoException if the database access error
      */
-    public List<User> findAllUsers() throws DaoException {
-        return USER_DAO.findAll();
+    public List<User> findAllUsers() throws ServiceException {
+        List<User> users;
+        try {
+            users = USER_DAO.findAll();
+        } catch (DaoException e) {
+            LOGGER.error("Failed to find all users in database");
+            throw new ServiceException(e);
+        }
+        return users;
     }
 
     public Optional<User> findById(int id) throws ServiceException {

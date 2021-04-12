@@ -56,7 +56,6 @@ public class OrderDao extends AbstractDao<Order> {
         super(connectionPool);
     }
 
-
     @Override
     protected String getFindAllSql() {
         return SQL_FIND_ALL;

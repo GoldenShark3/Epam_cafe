@@ -4,7 +4,6 @@ import com.epam.jwd.cafe.config.DatabaseConfig;
 import com.epam.jwd.cafe.exception.ApplicationStartException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,11 +18,11 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ConnectionPool {
     private final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
-    private static ConnectionPool instance;
-    private ConnectionQueue connections;
     private static final DatabaseConfig DATABASE_CONFIG = DatabaseConfig.getInstance();
     private static final AtomicBoolean IS_INSTANCE_CREATED = new AtomicBoolean(false);
     private static final Lock LOCK = new ReentrantLock();
+    private static ConnectionPool instance;
+    private ConnectionQueue connections;
 
     private ConnectionPool() {
     }
@@ -55,10 +54,13 @@ public class ConnectionPool {
         try {
             for (int i = 0; i < initSize; i++) {
                 connections.put(new ProxyConnection(DriverManager.getConnection(
-                        DATABASE_CONFIG.retrieveDatabaseURL(), DATABASE_CONFIG.getLogin(), DATABASE_CONFIG.getPassword()))
+                        DATABASE_CONFIG.retrieveDatabaseURL(),
+                        DATABASE_CONFIG.getLogin(),
+                        DATABASE_CONFIG.getPassword()))
                 );
             }
         } catch (SQLException | InterruptedException e ) {
+            LOGGER.fatal("Failed to initialize database connection pool");
             throw new ApplicationStartException("Failed to initialize database connection pool");
         }
     }

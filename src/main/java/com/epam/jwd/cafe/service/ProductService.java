@@ -35,8 +35,15 @@ public class ProductService {
      * @return {@link List<Product>}
      * @throws DaoException - if the database access error
      */
-    public List<Product> findAllProducts() throws DaoException {
-       return PRODUCT_DAO.findAll();
+    public List<Product> findAllProducts() throws ServiceException {
+       List<Product> products;
+        try {
+            products = PRODUCT_DAO.findAll();
+        } catch (DaoException e) {
+            LOGGER.error("Failed to find all products");
+            throw new ServiceException(e);
+        }
+        return products;
     }
 
     /**
@@ -133,9 +140,8 @@ public class ProductService {
      * @return {@link Optional<String>} - server message, if product name is already exist<br> or product not found
      * @throws ServiceException if the database access error
      */
-    public Optional<String> editProduct(int productId, String productName,
-                                        BigDecimal productPrice, String description) throws ServiceException {
-
+    public Optional<String> editProduct(int productId, String productName, BigDecimal productPrice,
+                                        String description) throws ServiceException {
         Optional<Product> productOptional = findProductById(productId);
         if (productOptional.isPresent()) {
             Product product = productOptional.get();

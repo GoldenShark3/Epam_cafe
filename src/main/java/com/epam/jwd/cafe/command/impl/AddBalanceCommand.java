@@ -27,8 +27,8 @@ import java.util.Optional;
  */
 public class AddBalanceCommand implements Command, UserCommand {
     private static final Logger LOGGER = LogManager.getLogger(AddBalanceCommand.class);
-    private static final Integer ADD_DOLLAR_TO_USER = 50;
     private static final UserService USER_SERVICE = UserService.INSTANCE;
+    private static final Integer ADD_DOLLAR_TO_USER = 50;
 
     @Override
     public ResponseContext execute(RequestContext request) {
@@ -43,7 +43,7 @@ public class AddBalanceCommand implements Command, UserCommand {
                 return new ResponseContext(new RestResponseType(), requestMap, new HashMap<>());
             }
         } catch (ServiceException e) {
-            LOGGER.error("Failed to add money to balance of user with id:" + userDto.getId());
+            LOGGER.error("Failed to add money to user with id:" + userDto.getId());
         }
         return new ResponseContext(new ForwardResponseType(PageConstant.ERROR_PAGE), requestMap, new HashMap<>());
     }

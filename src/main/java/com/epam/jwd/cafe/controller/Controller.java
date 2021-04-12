@@ -50,7 +50,6 @@ public class Controller extends HttpServlet {
             req.getSession().invalidate();
             responseContext.getRequestAttributes().remove(RequestConstant.LOGOUT);
         }
-
         chooseResponseType(req, resp, responseContext);
     }
 

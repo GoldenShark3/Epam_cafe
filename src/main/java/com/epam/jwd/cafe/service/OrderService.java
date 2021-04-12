@@ -51,7 +51,7 @@ public class OrderService {
      * @throws ServiceException if the database access error
      */
     public Optional<String> createOrder(Order order) throws ServiceException {
-        int loyaltyPointsPerDollar;
+        Integer loyaltyPointsPerDollar;
         User orderUser = order.getUser();
         UserService userService = UserService.INSTANCE;
 
@@ -147,7 +147,7 @@ public class OrderService {
         PaymentMethod paymentMethod = order.getPaymentMethod();
         OrderStatus orderStatus = order.getOrderStatus();
         ApplicationConfig applicationConfig = ApplicationConfig.getInstance();
-        int pointsPerDollar = applicationConfig.getLoyaltyPointsPerDollar();
+        Integer pointsPerDollar = applicationConfig.getLoyaltyPointsPerDollar();
 
         if (orderStatus.equals(OrderStatus.CANCELLED)) {
             if (paymentMethod.equals(PaymentMethod.BALANCE)) {

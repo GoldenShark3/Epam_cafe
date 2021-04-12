@@ -100,5 +100,4 @@ public enum CommandManager {
         }
         return ToNotFoundPageCommand.INSTANCE;
     }
-
 }

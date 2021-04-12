@@ -29,7 +29,6 @@ public class ProductTypeDao extends AbstractDao<ProductType> {
     private static final String SQL_CREATE = "INSERT INTO product_type (type_name, img_filename) VALUES (?, ?)";
     private static final String SQL_UPDATE = "UPDATE product_type SET type_name = ?, img_filename = ? WHERE id = ?";
     private static final String SQL_DELETE = "DELETE FROM product_type WHERE id = ?";
-    private static final String SQL_AMOUNT = "SELECT count(*) FROM product_type";
 
     private ProductTypeDao(ConnectionPool connectionPool) {
         super(connectionPool);

@@ -2,8 +2,6 @@ package com.epam.jwd.cafe.tag;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
@@ -37,7 +35,7 @@ public class PaginationTag extends TagSupport {
     }
 
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         StringBuilder stringBuilder = new StringBuilder();
         JspWriter out = pageContext.getOut();
         List<Integer> body = calcPagination();

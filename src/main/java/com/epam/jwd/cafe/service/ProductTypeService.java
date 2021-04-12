@@ -89,7 +89,6 @@ public class ProductTypeService {
      */
     public Optional<String> editProductType(int id, String newFileName, String newProductName) throws ServiceException {
         Optional<ProductType> productTypeOptional = findProductTypeById(id);
-
         if (productTypeOptional.isPresent()) {
             ProductType productType = productTypeOptional.get();
             if (!productType.getName().equals(newProductName)

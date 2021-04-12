@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * The interface provide CRUD operation
+ *
  * @param <T> type of entity
  * @author Aleksey Vyshamirski
  * @version 1.0.0
@@ -19,7 +20,8 @@ public interface Dao<T extends BaseEntity> {
 
     void deleteById(int id) throws DaoException;
 
+    List<T> findAll() throws DaoException;
+
     List<T> findByField(String searchableField, EntityField<T> nameOfField) throws DaoException;
 
-    List<T> findAll() throws DaoException;
 }
