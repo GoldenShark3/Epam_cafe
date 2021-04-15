@@ -23,7 +23,7 @@ import java.io.IOException;
  */
 
 @WebServlet(urlPatterns = {"/cafe", "*.do"})
-@MultipartConfig(location = "C:\\Users\\Aleksey\\Desktop\\EPAM\\EpamCafe\\out\\artifacts\\epam_cafe_war_exploded\\data",
+@MultipartConfig(location = "C:\\Users\\Aleksey\\Desktop\\EPAM\\EpamCafe\\target\\epam_cafe-1.0-SNAPSHOT\\data",
         maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 2)
 public class Controller extends HttpServlet {
 

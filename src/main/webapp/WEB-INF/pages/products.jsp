@@ -33,9 +33,8 @@
 <div class="row justify-content-center">
     <c:forEach items="${requestScope.pagination_context.objectList}" var="item">
         <div class="card text-center m-5 col-6" style="width: 18rem;">
-            <img src="<c:url value='/data/${item.imgFileName}'/>" class="card-img-top"
-                 style="max-height: 18rem;"
-                 alt="Item">
+            <img src="<c:url value='data/${item.imgFileName}'/>" class="card-img-top"
+                 style="max-height: 18rem;" alt="Item">
             <div class="card-body row align-items-end">
                 <h5 class="card-title">${item.name}</h5>
                 <p class="card-text">${item.description}</p>
@@ -125,7 +124,7 @@
                                         key="label.description"/></label>
                                 <input id="product_description" class="form-control" type="text"
                                        name="product_description"
-                                       placeholder="<fmt:message key="placeholder.description"/>" pattern="^.{4,40}$"
+                                       placeholder="<fmt:message key="placeholder.description"/>" pattern="^.{4,80}$"
                                        required>
                                 <div class="invalid-feedback">
                                     <fmt:message key="error.description"/>

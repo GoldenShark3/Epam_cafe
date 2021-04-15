@@ -7,6 +7,7 @@
     <tlib-version>1.0</tlib-version>
     <short-name>app_tag</short-name>
     <uri>/WEB-INF/taglib/pagination.tld</uri>
+
     <tag>
         <name>pagination</name>
         <tag-class>com.epam.jwd.cafe.tag.PaginationTag</tag-class>

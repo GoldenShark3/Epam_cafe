@@ -82,7 +82,7 @@
                     <select class="form-select" name="locale" onchange="submit()">
                         <option value="en_US" <c:if test="${locale eq 'en_US'}">selected</c:if>>English</option>
                         <option value="ru_RU" <c:if test="${locale eq 'ru_RU'}">selected</c:if>>Русский</option>
-                        <option value="be_BY" <c:if test="${locale eq 'be_BY'}">selected</c:if>>Беларуская</option>
+                        <option value="pl_PL" <c:if test="${locale eq 'pl_PL'}">selected</c:if>>Polski</option>
                     </select>
                 </form>
 
