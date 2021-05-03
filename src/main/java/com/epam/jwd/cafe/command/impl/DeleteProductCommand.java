@@ -10,6 +10,7 @@ import com.epam.jwd.cafe.command.constant.PageConstant;
 import com.epam.jwd.cafe.command.constant.RequestConstant;
 import com.epam.jwd.cafe.command.marker.AdminCommand;
 import com.epam.jwd.cafe.exception.ServiceException;
+import com.epam.jwd.cafe.model.Order;
 import com.epam.jwd.cafe.model.Product;
 import com.epam.jwd.cafe.service.OrderService;
 import com.epam.jwd.cafe.service.ProductService;
@@ -36,7 +37,6 @@ public class DeleteProductCommand implements Command, AdminCommand {
         try {
             int productId = Integer.parseInt(request.getRequestParameters().get(RequestConstant.ID));
             Optional<Product> productOptional = PRODUCT_SERVICE.findProductById(productId);
-
             if (productOptional.isPresent()) {
                 ORDER_SERVICE.deleteProductFromOrders(productId);
                 Product product = productOptional.get();

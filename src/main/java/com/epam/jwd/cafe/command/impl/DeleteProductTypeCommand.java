@@ -37,9 +37,9 @@ public class DeleteProductTypeCommand implements Command, AdminCommand {
         try {
             int typeId = Integer.parseInt(request.getRequestParameters().get(RequestConstant.ID));
             Optional<ProductType> productTypeOptional = PRODUCT_TYPE_SERVICE.findProductTypeById(typeId);
-
             if (productTypeOptional.isPresent()) {
                 ProductType productType = productTypeOptional.get();
+                ProductService.INSTANCE.deleteAllProductsByTypeId(productType.getId());
                 PRODUCT_TYPE_SERVICE.deleteProductTypeById(productType.getId());
                 IOUtil.deleteData(productType.getFileName());
 

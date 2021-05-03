@@ -18,6 +18,7 @@ import java.util.Optional;
 
 /**
  * The class provides a business logics of {@link Product}.
+ *
  * @author Aleksey Vyshamirski
  * @version 1.0.0
  */
@@ -26,7 +27,7 @@ public class ProductService {
     public static final ProductService INSTANCE = new ProductService();
     private static final ProductDao PRODUCT_DAO = ProductDao.INSTANCE;
 
-    private ProductService(){
+    private ProductService() {
     }
 
     /**
@@ -36,7 +37,7 @@ public class ProductService {
      * @throws DaoException - if the database access error
      */
     public List<Product> findAllProducts() throws ServiceException {
-       List<Product> products;
+        List<Product> products;
         try {
             products = PRODUCT_DAO.findAll();
         } catch (DaoException e) {
@@ -176,6 +177,20 @@ public class ProductService {
             PRODUCT_DAO.deleteById(productId);
         } catch (DaoException e) {
             LOGGER.error("Failed to delete product with id = " + productId);
+            throw new ServiceException(e);
+        }
+    }
+
+    public void deleteAllProductsByTypeId(int typeId) throws ServiceException {
+        OrderService orderService = OrderService.INSTANCE;
+        try {
+            List<Product> products = PRODUCT_DAO.findByField(String.valueOf(typeId), ProductField.PRODUCT_TYPE_ID);
+            for (Product product : products) {
+                orderService.deleteProductFromOrders(product.getId());
+                PRODUCT_DAO.deleteById(product.getId());
+            }
+        } catch (DaoException e) {
+            LOGGER.error("Failed to delete all products by type id");
             throw new ServiceException(e);
         }
     }

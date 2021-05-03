@@ -80,10 +80,10 @@
             }
         }
 
-        alert("<fmt:message key="info.successfullyCreateOrder"/>");
 
         let redirectCommand = parse.redirect_command;
         if (redirectCommand != null) {
+            alert("<fmt:message key="info.successfullyCreateOrder"/>");
             window.location.href = '<c:url value="/cafe"/>' + "?command=" + redirectCommand;
         }
     }
